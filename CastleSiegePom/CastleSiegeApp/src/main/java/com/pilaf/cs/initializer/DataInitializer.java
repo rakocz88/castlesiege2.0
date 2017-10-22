@@ -32,6 +32,10 @@ public class DataInitializer implements ApplicationRunner {
 		userAdmin.setEnabled(true);
 		userAdmin.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_ADMIN)));
 		userBiz.addUser(userAdmin);
+		User user2 = new User("janek", bcryptPasswordEncoder.encode("janek"));
+		user2.setEnabled(true);
+		user2.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user2);
 	}
 
 }
