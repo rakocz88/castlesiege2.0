@@ -1,5 +1,6 @@
 package com.pilaf.cs.initializer;
 
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -8,24 +9,29 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.pilaf.cs.users.biz.UserBiz;
+import com.pilaf.cs.users.model.Authority;
+import com.pilaf.cs.users.model.AuthorityName;
+import com.pilaf.cs.users.model.User;
 
 @Component
 public class DataInitializer implements ApplicationRunner {
-	
+
 	@Autowired
 	private UserBiz userBiz;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
-
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
-		userBiz.addUser("filip", bcryptPasswordEncoder.encode("filip"));
+		User user = new User("filip", bcryptPasswordEncoder.encode("filip"));
+		user.setEnabled(true);
+		user.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user);
+		User userAdmin = new User("admin", bcryptPasswordEncoder.encode("admin"));
+		userAdmin.setEnabled(true);
+		userAdmin.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_ADMIN)));
+		userBiz.addUser(userAdmin);
 	}
 
 }
-

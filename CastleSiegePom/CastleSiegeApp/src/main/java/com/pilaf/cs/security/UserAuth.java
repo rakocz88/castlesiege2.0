@@ -1,12 +1,14 @@
 package com.pilaf.cs.security;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pilaf.cs.users.model.User;
 
 public class UserAuth implements UserDetails {
@@ -54,7 +56,12 @@ public class UserAuth implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user.getEnabled();
 	}
+	
+    @JsonIgnore
+    public Date getLastPasswordResetDate() {
+        return user.getLastPasswordResetDate();
+    }
 
 }

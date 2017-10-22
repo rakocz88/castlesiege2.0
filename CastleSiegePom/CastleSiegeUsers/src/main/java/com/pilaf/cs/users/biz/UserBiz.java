@@ -1,5 +1,7 @@
 package com.pilaf.cs.users.biz;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,14 +18,16 @@ public class UserBiz {
 		return "Jan";
 	}
 
-	public void addUser(String login, String password) {
-		userRepository.save(new User(login, password));
-		// TODO Auto-generated method stub
-		
+	public void addUser(User user) {
+		userRepository.save(user);
 	}
 
 	public User getByName(String name) {
 		return userRepository.findByUsername(name);
+	}
+
+	public List<User> getAll() {
+		return userRepository.findAll();
 	}
 
 }
