@@ -1,4 +1,4 @@
-package com.pilaf.cs.rest.user;
+package com.pilaf.cs.rest;
 
 import javax.servlet.http.HttpServletRequest;
 

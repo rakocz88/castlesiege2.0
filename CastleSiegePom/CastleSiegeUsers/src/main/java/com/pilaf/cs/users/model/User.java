@@ -3,6 +3,7 @@ package com.pilaf.cs.users.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -59,10 +60,10 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastPasswordResetDate;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_AUTHORITY", joinColumns = {
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name = "USER_AUTHORITY",  joinColumns = {
 			@JoinColumn(name = "USER_ID", referencedColumnName = "ID") }, inverseJoinColumns = {
-					@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID") })
+					@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID") } )
 	private List<Authority> authorities;
 
 	public User() {

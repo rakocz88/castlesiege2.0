@@ -19,8 +19,8 @@ public class Authority {
 	@Enumerated(EnumType.STRING)
 	private AuthorityName name;
 
-	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-	private List<User> users;
+//	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+//	private List<User> users;
 
 	public Authority() {
 		super();
@@ -47,11 +47,11 @@ public class Authority {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 }

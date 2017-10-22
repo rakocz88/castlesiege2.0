@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -35,11 +37,17 @@ public class JwtTokenUtil implements Serializable {
     @Autowired
     private TimeProvider timeProvider;
 
+    @Value("${jwt.header}")
+    private String tokenHeader;
+    
     @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.expiration}")
     private Long expiration;
+    
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -150,5 +158,14 @@ public class JwtTokenUtil implements Serializable {
 
     private Date calculateExpirationDate(Date createdDate) {
         return new Date(createdDate.getTime() + expiration * 1000);
+    }
+    
+    public UserAuth getUserFromRequest(HttpServletRequest request){
+    	  String token = request.getHeader(tokenHeader).substring(7);
+          String username = getUsernameFromToken(token);
+          UserAuth user = (UserAuth) userDetailsService.loadUserByUsername(username);
+          return user;
+    	
+    	
     }
 }
