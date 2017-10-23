@@ -7,6 +7,8 @@ Feature: User module feature Feature
 
 Scenario: I want to log in as a customer user
 	Given I am a user that is not loged in
+	When I try to get the restEndpoint for information for user "filip" with the token
+	Then I should get the response status 500
 	When I try to get a token with the username "filip" and password "filip"
 	Then I should get a request with status code 200 and a token in it
 	When I try to get the restEndpoint for information for user "filip" with the token
