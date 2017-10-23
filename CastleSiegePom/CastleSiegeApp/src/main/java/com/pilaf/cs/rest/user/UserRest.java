@@ -25,6 +25,7 @@ import com.pilaf.cs.users.UserBeanConfiguration;
 import com.pilaf.cs.users.biz.UserBiz;
 import com.pilaf.cs.users.model.AuthorityName;
 import com.pilaf.cs.users.model.User;
+import com.pilaf.cs.validator.UserRestValidator;
 
 @RestController
 @RequestMapping("users")
@@ -34,23 +35,20 @@ public class UserRest extends AbstractRestController{
 	private final UserBiz userBiz;
 
 	private final JwtTokenUtil jwtTokenUtil;
+	
+	private final UserRestValidator userRestValidator;
 
 	@Autowired
-	public UserRest(UserBiz userBiz, JwtTokenUtil jwtTokenUtil) {
+	public UserRest(UserBiz userBiz, JwtTokenUtil jwtTokenUtil, UserRestValidator restValidator) {
 		this.userBiz = userBiz;
 		this.jwtTokenUtil = jwtTokenUtil;
+		this.userRestValidator = restValidator;
 	}
 
 	@RequestMapping(value = "{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User getByName(HttpServletRequest request,  HttpServletResponse response, @PathVariable("name") String name) throws IOException {
-		// TODO FILIP move function to validator
 		UserAuth user = jwtTokenUtil.getUserFromRequest(request);
-		boolean isAdmin = !user.getAuthorities().stream()
-				.filter(auth -> auth.getAuthority().equals(AuthorityName.ROLE_ADMIN.name()))
-				.collect(Collectors.toList()).isEmpty();
-		if ((!user.getUsername().equals(name)) && !isAdmin) {
-			throw new HTTPException(HttpStatus.FORBIDDEN.value());
-		}
+		userRestValidator.validateUserIsOwnerOrAdmin(request, user, name);
 		return userBiz.getByName(name);
 	}
 
