@@ -24,7 +24,7 @@ import com.pilaf.cs.security.JwtTokenUtil;
 import com.pilaf.cs.security.UserAuth;
 
 @RestController
-public class AuthenticationRestController {
+public class AuthenticationRestController extends AbstractRestController {
 
 	@Value("${jwt.header}")
 	private String tokenHeader;
@@ -68,7 +68,8 @@ public class AuthenticationRestController {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
         } else {
-            return ResponseEntity.badRequest().body(null);
+        	throw new RuntimeException("dupa");
+//            return ResponseEntity.badRequest().body(null);
         }
     }
 

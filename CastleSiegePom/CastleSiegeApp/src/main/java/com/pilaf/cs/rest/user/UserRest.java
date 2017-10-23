@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.http.HTTPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 
+import com.pilaf.cs.rest.AbstractRestController;
 import com.pilaf.cs.security.JwtTokenUtil;
 import com.pilaf.cs.security.UserAuth;
 import com.pilaf.cs.users.UserBeanConfiguration;
@@ -28,7 +29,7 @@ import com.pilaf.cs.users.model.User;
 @RestController
 @RequestMapping("users")
 @Import(UserBeanConfiguration.class)
-public class UserRest {
+public class UserRest extends AbstractRestController{
 
 	private final UserBiz userBiz;
 
@@ -48,8 +49,7 @@ public class UserRest {
 				.filter(auth -> auth.getAuthority().equals(AuthorityName.ROLE_ADMIN.name()))
 				.collect(Collectors.toList()).isEmpty();
 		if ((!user.getUsername().equals(name)) && !isAdmin) {
-			response.sendError(HttpStatus.FORBIDDEN.value(), "Can't view current user");
-			return null;
+			throw new HTTPException(HttpStatus.FORBIDDEN.value());
 		}
 		return userBiz.getByName(name);
 	}
