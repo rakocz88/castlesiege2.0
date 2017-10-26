@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ValidationException;
 import javax.xml.ws.http.HTTPException;
 
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public abstract class AbstractRestController {
 			return;
 		} else if (ex instanceof AccessDeniedException) {
 			response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+			return;
+		} else if (ex instanceof ValidationException) {
+			response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 			return;
 		} else {
 			response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());

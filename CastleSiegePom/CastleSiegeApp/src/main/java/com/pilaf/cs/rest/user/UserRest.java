@@ -2,15 +2,11 @@ package com.pilaf.cs.rest.user;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.http.HTTPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pilaf.cs.rest.AbstractRestController;
 import com.pilaf.cs.security.JwtTokenUtil;
 import com.pilaf.cs.security.UserAuth;
-import com.pilaf.cs.users.UserBeanConfiguration;
 import com.pilaf.cs.users.biz.UserBiz;
-import com.pilaf.cs.users.model.AuthorityName;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.validator.UserRestValidator;
 
 @RestController
 @RequestMapping("users")
-@Import(UserBeanConfiguration.class)
 public class UserRest extends AbstractRestController{
 
 	private final UserBiz userBiz;
@@ -51,6 +44,8 @@ public class UserRest extends AbstractRestController{
 		userRestValidator.validateUserIsOwnerOrAdmin(request, user, name);
 		return userBiz.getByName(name);
 	}
+	
+
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

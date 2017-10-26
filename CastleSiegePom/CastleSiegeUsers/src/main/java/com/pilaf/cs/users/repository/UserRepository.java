@@ -7,5 +7,7 @@ import com.pilaf.cs.users.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByUsername(String username);
+	
+	User findByEmail(String email);
 
 }

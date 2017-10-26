@@ -49,7 +49,7 @@ public class User {
 	@Size(min = 4, max = 50)
 	private String lastname;
 
-	@Column(name = "EMAIL", length = 50)
+	@Column(name = "EMAIL", length = 50, unique = true)
 	@Size(min = 4, max = 50)
 	private String email;
 

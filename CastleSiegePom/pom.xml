@@ -10,5 +10,6 @@
 	<modules>
 		<module>CastleSiegeUsers</module>
 		<module>CastleSiegeApp</module>
+		<module>CastleSiegeNotification</module>
 	</modules>
 </project>

@@ -30,4 +30,24 @@ Scenario: I want to log in as a admin user
 	Then I should get the response status 200
 	And The list of users should not be empty
 	
+Scenario: I want to register a new user
+	Given I am a person who wants to create a account
+	When A user with username "filip" exists in the database
+	When I register a user with login  "filip" and password "filip" and firstname  "filip" and surname "filip" and login "filip@gmail.com"
+	Then I should get a response with status 400
+	When User "flap" does not exist in the database
+	And I register a user with login  "flap" and password "flap" and firstname  "flap" and surname "flap" and login "rakocz88@gmail.com"
+	Then I should get the response status 200
+	And User "flap" should be in the database
+	And User "flap" enabled flag should be "false"
+	And in the output msg there should be an entry for user "flap" and it should not be empty
+	When I try to perform a log in with the user "flap" with password "flap"
+	Then I should get the response 401
+	When I click the link then was send to me
+	Then I should get the response 200
+	And User "flap" enabled flag should be "true"
+	When I try to perform a log in with the user "flap" with password "flap"
+	Then I should get the response 200
+	And the response should contain a not empty token
+	
 	
