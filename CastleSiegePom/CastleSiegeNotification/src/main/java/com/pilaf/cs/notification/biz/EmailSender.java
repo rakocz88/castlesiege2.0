@@ -19,15 +19,16 @@ public class EmailSender {
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	public void sendRegistrationEmail(String email, String username, String activationCode) {
+	public String sendRegistrationEmail(String email, String username, String activationCode) {
 		Context context = new Context();
 		context.setVariable("username", username);
 		context.setVariable("activationCode", getLinkWithActivationCode(activationCode));
 		String body = templateEngine.process("template", context);
 		sendEmail(email, "Castle Siege Activation", body);
+		return activationCode;
 	}
 
-	private Object getLinkWithActivationCode(String activationCode) { 
+	private String getLinkWithActivationCode(String activationCode) { 
 		//TODO hardcoded server
 		return String.format("http://localhost:8080/activate/%s", activationCode);
 	}

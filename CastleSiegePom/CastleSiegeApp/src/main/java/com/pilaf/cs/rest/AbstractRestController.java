@@ -9,6 +9,8 @@ import javax.xml.ws.http.HTTPException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 public abstract class AbstractRestController {
@@ -24,6 +26,12 @@ public abstract class AbstractRestController {
 			return;
 		} else if (ex instanceof ValidationException) {
 			response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+			return;
+		} else if (ex instanceof DisabledException) {
+			response.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+			return;
+		} else if (ex instanceof BadCredentialsException) {
+			response.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
 			return;
 		} else {
 			response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());

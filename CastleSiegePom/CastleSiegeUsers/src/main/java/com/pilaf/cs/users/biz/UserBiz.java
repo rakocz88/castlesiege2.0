@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pilaf.cs.notification.biz.EmailBiz;
+import com.pilaf.cs.users.activator.UserActivator;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.users.processor.RegistrationUserProccessor;
 import com.pilaf.cs.users.repository.UserRepository;
@@ -30,6 +31,9 @@ public class UserBiz {
 	@Autowired
 	private UserUtil userUtil;
 
+	@Autowired
+	private UserActivator userActivator;
+
 	public void addUser(User user) {
 		userRepository.save(user);
 	}
@@ -43,11 +47,17 @@ public class UserBiz {
 	}
 
 	public User registerUser(User user) {
+		userValidator.validateRegisteredUser(user);
 		User proccessedUser = userProccessor.proccessNewRegisteredUser(user);
-		userValidator.validateRegisteredUser(proccessedUser);
 		userRepository.save(proccessedUser);
-		emailBiz.sendMessage(proccessedUser.getEmail(), "Register User",  userUtil.generateActivationCodeLink());
+		emailBiz.sendMessage(proccessedUser.getEmail(), "Register User", userUtil.generateActivationCodeLink());
 		return proccessedUser;
+	}
+
+	public String activateUser(String token) {
+		String userEmail = emailBiz.findEmailByToken(token);
+		userActivator.activateUser(userEmail);
+		return "User Active";
 	}
 
 }

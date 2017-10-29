@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,5 +29,11 @@ public class RegistrationRest extends AbstractRestController{
 	public User register(HttpServletRequest request,  HttpServletResponse response, @RequestBody User user) throws IOException {
 		return userBiz.registerUser(user);
 	}
+	
+	@RequestMapping(value = "activate/{token}", method = RequestMethod.GET)
+	public String activate(HttpServletRequest request,  HttpServletResponse response, @PathVariable("token") String token) throws IOException {
+		return userBiz.activateUser(token);
+	}
+	
 
 }

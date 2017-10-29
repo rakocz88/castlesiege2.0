@@ -37,7 +37,7 @@
 			<artifactId>CastleSiegeUsers</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-			<dependency>
+		<dependency>
 			<groupId>com.pilaf.cs</groupId>
 			<artifactId>CastleSiegeNotification</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -73,7 +73,16 @@
 			<artifactId>cucumber-spring</artifactId>
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
+
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.4</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
 		<dependency>

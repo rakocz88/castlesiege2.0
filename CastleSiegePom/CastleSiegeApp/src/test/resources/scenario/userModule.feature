@@ -40,10 +40,10 @@ Scenario: I want to register a new user
 	Then I should get the response status 200
 	And User "flap" should be in the database
 	And User "flap" enabled flag should be "false"
-	And in the output msg there should be an entry for user "flap" and it should not be empty
+	And in the output msg there should be an entry for user "rakocz88@gmail.com" and it should not be empty
 	When I try to perform a log in with the user "flap" with password "flap"
 	Then I should get the response 401
-	When I click the link then was send to me
+	When I click the link then was send to "rakocz88@gmail.com"
 	Then I should get the response 200
 	And User "flap" enabled flag should be "true"
 	When I try to perform a log in with the user "flap" with password "flap"

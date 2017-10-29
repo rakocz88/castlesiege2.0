@@ -19,8 +19,8 @@ public class EmailBiz {
 	private EmailSender emailSender;
 	
 	public void sendMessage(String email, String title, String msg){
-		emailSender.sendRegistrationEmail(email, email, msg);
-		sendEmailRepository.save(new SendEmail(email, msg));
+		String returnedMessage = emailSender.sendRegistrationEmail(email, email, msg);
+		sendEmailRepository.save(new SendEmail(email, returnedMessage));
 	}
 	
 	public SendEmail getLastEmailForUser(String emailAccount){
@@ -30,6 +30,10 @@ public class EmailBiz {
 	
 	public List<SendEmail> findAllByUser(String emailAccount){
 		return sendEmailRepository.findByEmail(emailAccount);
+	}
+
+	public String findEmailByToken(String token) {
+		return sendEmailRepository.findByMessage(token).getEmail();
 	}
 
 

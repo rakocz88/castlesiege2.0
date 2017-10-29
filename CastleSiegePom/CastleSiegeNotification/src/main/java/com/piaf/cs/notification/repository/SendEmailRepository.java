@@ -9,5 +9,7 @@ import com.piaf.cs.notification.model.SendEmail;
 public interface SendEmailRepository extends JpaRepository<SendEmail, Long> {
 
 	List<SendEmail> findByEmail(String username);
+	
+	SendEmail findByMessage(String message);
 
 }
