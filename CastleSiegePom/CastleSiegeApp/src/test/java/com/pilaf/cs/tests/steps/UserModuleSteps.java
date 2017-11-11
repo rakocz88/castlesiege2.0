@@ -11,16 +11,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import com.pilaf.cs.security.JwtAuthenticationRequest;
-import com.pilaf.cs.security.JwtAuthenticationResponse;
-import com.pilaf.cs.tests.SpringIntegrationTest;
 import com.pilaf.cs.tests.builder.UserTest;
 import com.pilaf.cs.users.model.User;
 
@@ -28,9 +23,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;;
 
-public class UserModuleSteps extends SpringIntegrationTest implements RestEndpoints {
-
-	TestRestTemplate restTemplate = new TestRestTemplate(new RestTemplate());
+public class UserModuleSteps extends AbstractCSTestCase {
 
 	@Before
 	public void resetAllData() throws InterruptedException {
@@ -45,15 +38,8 @@ public class UserModuleSteps extends SpringIntegrationTest implements RestEndpoi
 
 	@When("^I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void i_try_to_get_a_token_with_the_username_and_password(String userName, String password) throws Throwable {
-		User user = new User(userName, password);
-		UserTest.getInstance().setReturnedUser(user);
-		String url = String.format(LOGIN_ENDPOINT, port);
-		JwtAuthenticationRequest authenticationRequest = new JwtAuthenticationRequest(UserTest.getInstance().getReturnedUser().getUsername(),
-				UserTest.getInstance().getReturnedUser().getPassword());
-		ResponseEntity<JwtAuthenticationResponse> response = restTemplate.postForEntity(url, authenticationRequest,
-				JwtAuthenticationResponse.class);
-		UserTest.getInstance().setAuthorizationToken(response.getBody().getToken());
-		UserTest.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
+		logInWithUser(userName, password, UserTest.getInstance());
+
 	}
 
 	@Then("^I should get a request with status code (\\d+) and a token in it$")
@@ -65,7 +51,8 @@ public class UserModuleSteps extends SpringIntegrationTest implements RestEndpoi
 	}
 
 	@When("^I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
-	public void i_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName) throws Throwable {
+	public void i_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName)
+			throws Throwable {
 		MultiValueMap<String, String> headers = UserModuleTestUtils
 				.getHeaders(UserTest.getInstance().getAuthorizationToken());
 		String url = String.format(GET_USER_ENDPOINT, port, userName);
@@ -89,7 +76,7 @@ public class UserModuleSteps extends SpringIntegrationTest implements RestEndpoi
 	public void i_should_get_the_response_status(int responseStatus) throws Throwable {
 		assertThat("Wrong http status", UserTest.getInstance().getCurrentHttpStatus(), equalTo(responseStatus));
 	}
-	
+
 	@When("^I try to get all the users with non admin user$")
 	public void i_try_to_get_all_the_users_with_non_admin_user() throws Throwable {
 		String url = String.format(GET_ALL_USERy_ENDPOINT, port);
@@ -110,11 +97,10 @@ public class UserModuleSteps extends SpringIntegrationTest implements RestEndpoi
 		UserTest.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 		UserTest.getInstance().setUserList(new ArrayList<>(Arrays.asList(response.getBody())));
 	}
-	
+
 	@Then("^The list of users should not be empty$")
 	public void the_list_of_users_should_not_be_empty() throws Throwable {
-	 assertThat("UserListShouldNotBeEmpty", UserTest.getInstance().getUserList().isEmpty(), is(false)); 
+		assertThat("UserListShouldNotBeEmpty", UserTest.getInstance().getUserList().isEmpty(), is(false));
 	}
-
 
 }

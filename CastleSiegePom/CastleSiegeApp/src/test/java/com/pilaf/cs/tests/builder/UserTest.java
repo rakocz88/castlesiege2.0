@@ -5,11 +5,8 @@ import java.util.List;
 
 import com.pilaf.cs.users.model.User;
 
-public class UserTest {
+public class UserTest extends AbstractWithUserTest {
 
-	private String authorizationToken;
-	private User returnedUser;
-	private int currentHttpStatus;
 	private static UserTest instance = null;
 	private List<User> userList = new ArrayList<>();
 
@@ -29,34 +26,6 @@ public class UserTest {
 		return instance;
 	}
 
-
-	public String getAuthorizationToken() {
-		return authorizationToken;
-	}
-
-	public UserTest setAuthorizationToken(String authorizationToken) {
-		this.authorizationToken = authorizationToken;
-		return this;
-	}
-
-	public User getReturnedUser() {
-		return returnedUser;
-	}
-
-	public UserTest setReturnedUser(User returnedUser) {
-		this.returnedUser = returnedUser;
-		return this;
-	}
-
-	public int getCurrentHttpStatus() {
-		return currentHttpStatus;
-	}
-
-	public UserTest setCurrentHttpStatus(int currentHttpStatus) {
-		this.currentHttpStatus = currentHttpStatus;
-		return this;
-	}
-
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -65,7 +34,5 @@ public class UserTest {
 		this.userList = userList;
 		return this;
 	}
-	
-	
 
 }

@@ -6,6 +6,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(glue = {"com.pilaf.cs.tests.steps"}, features = "classpath:scenario/userModule.feature")
+@CucumberOptions(glue = { "com.pilaf.cs.tests.steps" }, features = { "classpath:scenario/userModule.feature",
+		"classpath:scenario/websocketSecurity.feature" })
 public class RunBDDTest {
 }

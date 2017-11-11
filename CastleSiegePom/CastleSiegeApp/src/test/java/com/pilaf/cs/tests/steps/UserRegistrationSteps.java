@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import com.pilaf.cs.notification.biz.EmailBiz;
 import com.pilaf.cs.security.JwtAuthenticationRequest;
 import com.pilaf.cs.security.JwtAuthenticationResponse;
-import com.pilaf.cs.tests.SpringIntegrationTest;
 import com.pilaf.cs.tests.builder.UserRegistrationTest;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.users.repository.UserRepository;
@@ -27,7 +26,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;;
 
-public class UserRegistrationSteps extends SpringIntegrationTest implements RestEndpoints {
+public class UserRegistrationSteps extends AbstractCSTestCase {
 
 	private ClientHttpRequestFactory requestFactory = new     
 		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
@@ -39,9 +38,6 @@ public class UserRegistrationSteps extends SpringIntegrationTest implements Rest
 
 	@Autowired
 	private EmailBiz emailBiz;
-	
-	
-
 
 	@Before
 	public void resetAllData() throws InterruptedException {
@@ -85,11 +81,11 @@ public class UserRegistrationSteps extends SpringIntegrationTest implements Rest
 	public void i_try_to_perform_a_log_in_with_the_user_with_password(String username, String password)
 			throws Throwable {
 		User user = new User(username, password);
-		UserRegistrationTest.getInstance().setCurrentUser(user);
+		UserRegistrationTest.getInstance().setReturnedUser(user);
 		String url = String.format(LOGIN_ENDPOINT, port);
 		JwtAuthenticationRequest authenticationRequest = new JwtAuthenticationRequest(
-				UserRegistrationTest.getInstance().getCurrentUser().getUsername(),
-				UserRegistrationTest.getInstance().getCurrentUser().getPassword());
+				UserRegistrationTest.getInstance().getReturnedUser().getUsername(),
+				UserRegistrationTest.getInstance().getReturnedUser().getPassword());
 		ResponseEntity<JwtAuthenticationResponse> response = restTemplate.postForEntity(url, authenticationRequest,
 				JwtAuthenticationResponse.class);
 		UserRegistrationTest.getInstance().setAuthorizationToken(response.getBody().getToken());
@@ -124,7 +120,7 @@ public class UserRegistrationSteps extends SpringIntegrationTest implements Rest
 		user.setEmail(arg5);
 		user.setLastname(arg3);
 		user.setFirstname(arg4);
-		UserRegistrationTest.getInstance().setCurrentUser(user);
+		UserRegistrationTest.getInstance().setReturnedUser(user);
 		String url = String.format(REGISTRATION_ENDPOINT, port);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, user, String.class);
 		UserRegistrationTest.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
@@ -137,8 +133,12 @@ public class UserRegistrationSteps extends SpringIntegrationTest implements Rest
 		String path = String.format(ACTIVATION_ENDPOINT, port, activationLink);
 		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
 		Thread.sleep(1000l);
-		User user = userRepository.findByUsername(UserRegistrationTest.getInstance().getCurrentUser().getUsername());
-		UserRegistrationTest.getInstance().setCurrentUser(user);
+		User user = userRepository.findByUsername(UserRegistrationTest.getInstance().getReturnedUser().getUsername());
+		UserRegistrationTest.getInstance().setReturnedUser(user);
 		UserRegistrationTest.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
 	}
+	
+	
+	
+
 }
