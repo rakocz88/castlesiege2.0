@@ -14,7 +14,7 @@ import com.pilaf.cs.users.model.AuthorityName;
 @Component
 public class UserRestValidator {
 
-	public void validateUserIsOwnerOrAdmin(HttpServletRequest request, UserAuth user, String requestedUserName ) {
+	public void validateUserIsOwnerOrAdmin(HttpServletRequest request, UserAuth user, String requestedUserName) {
 		boolean isAdmin = !user.getAuthorities().stream()
 				.filter(auth -> auth.getAuthority().equals(AuthorityName.ROLE_ADMIN.name()))
 				.collect(Collectors.toList()).isEmpty();

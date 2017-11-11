@@ -28,14 +28,30 @@ public class DataInitializer implements ApplicationRunner {
 		user.setEnabled(true);
 		user.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
 		userBiz.addUser(user);
+		User user2 = new User("filip2", bcryptPasswordEncoder.encode("filip2"));
+		user2.setEnabled(true);
+		user2.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user2);
+		User user3 = new User("filip3", bcryptPasswordEncoder.encode("filip3"));
+		user3.setEnabled(true);
+		user3.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user3);
+		User user4 = new User("filip4", bcryptPasswordEncoder.encode("filip4"));
+		user4.setEnabled(true);
+		user4.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user4);
+		User user5 = new User("filip5", bcryptPasswordEncoder.encode("filip5"));
+		user5.setEnabled(true);
+		user5.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user5);
 		User userAdmin = new User("admin", bcryptPasswordEncoder.encode("admin"));
 		userAdmin.setEnabled(true);
 		userAdmin.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_ADMIN)));
 		userBiz.addUser(userAdmin);
-		User user2 = new User("janek", bcryptPasswordEncoder.encode("janek"));
-		user2.setEnabled(true);
-		user2.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
-		userBiz.addUser(user2);
+		User user6 = new User("janek", bcryptPasswordEncoder.encode("janek"));
+		user6.setEnabled(true);
+		user6.setAuthorities(Collections.singletonList(new Authority(AuthorityName.ROLE_USER)));
+		userBiz.addUser(user6);
 	}
 
 }

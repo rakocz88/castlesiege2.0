@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.piaf.cs.notification.NotificationBeanConfiguration;
+import com.pilaf.cs.notification.NotificationBeanConfiguration;
 import com.pilaf.cs.users.biz.UserBiz;
 
 @Configuration

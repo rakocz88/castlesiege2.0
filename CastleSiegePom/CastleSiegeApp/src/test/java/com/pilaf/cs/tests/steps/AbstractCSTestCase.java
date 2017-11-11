@@ -71,7 +71,6 @@ public abstract class AbstractCSTestCase extends SpringIntegrationTest implement
 		} catch (TimeoutException ex) {
 			instance.setAuthenticationFailure(true);
 		}
-
 	}
 
 	private List<Transport> createTransportClient() {

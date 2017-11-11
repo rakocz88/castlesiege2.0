@@ -26,15 +26,6 @@ public class WebSocketAuthenticatorService {
 		if (user == null) {
 			throw new AuthenticationCredentialsNotFoundException("Error in authentication.");
 		}
-//		SecurityContextHolder.getContext().setAuthentication(new UserAuth(user));
-		// // Add your own logic for retrieving user in fetchUserFromDb()
-		// if (fetchUserFromDb(username, password) == null) {
-		// throw new BadCredentialsException("Bad credentials for user " +
-		// username);
-		// }
-
-		// null credentials, we do not pass the password along to prevent
-		// security flaw
 		return new UsernamePasswordAuthenticationToken(username, null, null);
 	}
 }

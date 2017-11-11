@@ -1,4 +1,4 @@
-package com.piaf.cs.notification;
+package com.pilaf.cs.notification;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

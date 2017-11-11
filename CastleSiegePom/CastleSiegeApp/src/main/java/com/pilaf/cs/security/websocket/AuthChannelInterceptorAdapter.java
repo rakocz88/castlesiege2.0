@@ -8,12 +8,9 @@ import org.springframework.messaging.support.ChannelInterceptorAdapter;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 
 public class AuthChannelInterceptorAdapter extends ChannelInterceptorAdapter {
-	private static final String USERNAME_HEADER = "login";
-	private static final String PASSWORD_HEADER = "passcode";
 	private final WebSocketAuthenticatorService webSocketAuthenticatorService;
 	
 
