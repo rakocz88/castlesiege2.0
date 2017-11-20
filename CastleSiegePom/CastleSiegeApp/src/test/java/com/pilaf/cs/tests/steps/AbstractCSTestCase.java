@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -28,8 +29,9 @@ import com.pilaf.cs.game.model.GameState;
 import com.pilaf.cs.security.JwtAuthenticationRequest;
 import com.pilaf.cs.security.JwtAuthenticationResponse;
 import com.pilaf.cs.tests.SpringIntegrationTest;
-import com.pilaf.cs.tests.builder.AbstractWithUserTest;
-import com.pilaf.cs.tests.builder.WebSocketSecurityTest;
+import com.pilaf.cs.tests.builder.AbstractWithUserTestState;
+import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
+import com.pilaf.cs.tests.builder.AbstractWebSocketSecurityTestState;
 import com.pilaf.cs.users.model.User;
 
 public abstract class AbstractCSTestCase extends SpringIntegrationTest implements RestEndpoints {
@@ -39,7 +41,7 @@ public abstract class AbstractCSTestCase extends SpringIntegrationTest implement
 	@SuppressWarnings("rawtypes")
 	private CompletableFuture completableFuture;
 
-	protected void logInWithUser(String userName, String password, AbstractWithUserTest instance) {
+	protected void logInWithUser(String userName, String password, AbstractWithUserTestState instance) {
 		User user = new User(userName, password);
 		instance.setReturnedUser(user);
 		String url = String.format(LOGIN_ENDPOINT, port);
@@ -51,7 +53,7 @@ public abstract class AbstractCSTestCase extends SpringIntegrationTest implement
 		instance.setCurrentHttpStatus(response.getStatusCode().value());
 	}
 
-	protected void connectAndSubscribeToChannel(String websocketURL, String channelName, WebSocketSecurityTest instance)
+	protected void connectAndSubscribeToChannel(String websocketURL, String channelName, AbstractWebSocketSecurityTestState instance)
 			throws InterruptedException, ExecutionException, TimeoutException {
 		// String uuid = UUID.randomUUID().toString();
 		completableFuture = new CompletableFuture<>();
@@ -68,6 +70,7 @@ public abstract class AbstractCSTestCase extends SpringIntegrationTest implement
 					}).get(5, SECONDS);
 			stompSession.subscribe(channelName, new CreateGameStompFrameHandler());
 			instance.setStompSession(stompSession);
+			
 		} catch (TimeoutException ex) {
 			instance.setAuthenticationFailure(true);
 		}
@@ -83,14 +86,14 @@ public abstract class AbstractCSTestCase extends SpringIntegrationTest implement
 		@Override
 		public Type getPayloadType(StompHeaders stompHeaders) {
 			System.out.println(stompHeaders.toString());
-			return GameState.class;
+			return Object.class;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleFrame(StompHeaders stompHeaders, Object o) {
-			System.out.println((GameState) o);
-			completableFuture.complete((GameState) o);
+			System.out.println((Object) o);
+			completableFuture.complete((Object) o);
 		}
 	}
 }

@@ -4,8 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.springframework.messaging.simp.stomp.StompSession;
 
-public class WebSocketSecurityTest extends AbstractWithUserTest {
-	private static WebSocketSecurityTest instance = null;
+public abstract class AbstractWebSocketSecurityTestState extends AbstractWithUserTestState {
 
 	private StompSession stompSession;
 
@@ -13,21 +12,8 @@ public class WebSocketSecurityTest extends AbstractWithUserTest {
 
 	private boolean authenticationFailure;
 
-	private WebSocketSecurityTest() {
-		super();
-	}
 
-	public static WebSocketSecurityTest getInstance() {
-		if (instance == null) {
-			instance = new WebSocketSecurityTest();
-		}
-		return instance;
-	}
-
-	public static WebSocketSecurityTest resetData() {
-		instance = new WebSocketSecurityTest();
-		return instance;
-	}
+	
 
 	public StompSession getStompSession() {
 		return stompSession;
@@ -45,10 +31,7 @@ public class WebSocketSecurityTest extends AbstractWithUserTest {
 		this.completableFuture = completableFuture;
 	}
 
-	public static void reset() {
-		instance = new WebSocketSecurityTest();
-	}
-
+	
 	public boolean isAuthenticationFailure() {
 		return authenticationFailure;
 	}

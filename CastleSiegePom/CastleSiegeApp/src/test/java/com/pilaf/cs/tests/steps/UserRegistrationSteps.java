@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import com.pilaf.cs.notification.biz.EmailBiz;
 import com.pilaf.cs.security.JwtAuthenticationRequest;
 import com.pilaf.cs.security.JwtAuthenticationResponse;
-import com.pilaf.cs.tests.builder.UserRegistrationTest;
+import com.pilaf.cs.tests.builder.UserRegistrationTestState;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.users.repository.UserRepository;
 
@@ -42,12 +42,12 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 	@Before
 	public void resetAllData() throws InterruptedException {
 		System.out.println("RESET DATA");
-		UserRegistrationTest.resetData();
+		UserRegistrationTestState.resetData();
 	}
 
 	@Given("^I am a person who wants to create a account$")
 	public void i_am_a_person_who_wants_to_create_a_account() throws Throwable {
-		UserRegistrationTest.resetData();
+		UserRegistrationTestState.resetData();
 	}
 
 	@When("^A user with username \"([^\"]*)\" exists in the database$")
@@ -57,7 +57,7 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 
 	@Then("^I should get a response with status (\\d+)$")
 	public void i_should_get_a_response_with_status(int statusCode) throws Throwable {
-		assertThat("Wrong status code", UserRegistrationTest.getInstance().getCurrentHttpStatus(), equalTo(statusCode));
+		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(), equalTo(statusCode));
 	}
 
 	@When("^User \"([^\"]*)\" does not exist in the database$")
@@ -81,20 +81,20 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 	public void i_try_to_perform_a_log_in_with_the_user_with_password(String username, String password)
 			throws Throwable {
 		User user = new User(username, password);
-		UserRegistrationTest.getInstance().setReturnedUser(user);
+		UserRegistrationTestState.getInstance().setReturnedUser(user);
 		String url = String.format(LOGIN_ENDPOINT, port);
 		JwtAuthenticationRequest authenticationRequest = new JwtAuthenticationRequest(
-				UserRegistrationTest.getInstance().getReturnedUser().getUsername(),
-				UserRegistrationTest.getInstance().getReturnedUser().getPassword());
+				UserRegistrationTestState.getInstance().getReturnedUser().getUsername(),
+				UserRegistrationTestState.getInstance().getReturnedUser().getPassword());
 		ResponseEntity<JwtAuthenticationResponse> response = restTemplate.postForEntity(url, authenticationRequest,
 				JwtAuthenticationResponse.class);
-		UserRegistrationTest.getInstance().setAuthorizationToken(response.getBody().getToken());
-		UserRegistrationTest.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
+		UserRegistrationTestState.getInstance().setAuthorizationToken(response.getBody().getToken());
+		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 	}
 
 	@Then("^I should get the response (\\d+)$")
 	public void i_should_get_the_response(int resposeCode) throws Throwable {
-		assertThat("Wrong status code", UserRegistrationTest.getInstance().getCurrentHttpStatus(),
+		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(),
 				equalTo(resposeCode));
 	}
 
@@ -109,7 +109,7 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 
 	@Then("^the response should contain a not empty token$")
 	public void the_response_should_contain_a_not_empty_token() throws Throwable {
-		assertThat("Token should not be empty", UserRegistrationTest.getInstance().getAuthorizationToken(),
+		assertThat("Token should not be empty", UserRegistrationTestState.getInstance().getAuthorizationToken(),
 				is(notNullValue()));
 	}
 	
@@ -120,10 +120,10 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 		user.setEmail(arg5);
 		user.setLastname(arg3);
 		user.setFirstname(arg4);
-		UserRegistrationTest.getInstance().setReturnedUser(user);
+		UserRegistrationTestState.getInstance().setReturnedUser(user);
 		String url = String.format(REGISTRATION_ENDPOINT, port);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, user, String.class);
-		UserRegistrationTest.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
+		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
 	}
 	
 	@When("^I click the link then was send to \"([^\"]*)\"$")
@@ -133,9 +133,9 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 		String path = String.format(ACTIVATION_ENDPOINT, port, activationLink);
 		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
 		Thread.sleep(1000l);
-		User user = userRepository.findByUsername(UserRegistrationTest.getInstance().getReturnedUser().getUsername());
-		UserRegistrationTest.getInstance().setReturnedUser(user);
-		UserRegistrationTest.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
+		User user = userRepository.findByUsername(UserRegistrationTestState.getInstance().getReturnedUser().getUsername());
+		UserRegistrationTestState.getInstance().setReturnedUser(user);
+		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
 	}
 	
 	

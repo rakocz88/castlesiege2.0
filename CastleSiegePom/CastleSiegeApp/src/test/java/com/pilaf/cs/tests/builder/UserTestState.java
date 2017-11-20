@@ -5,24 +5,24 @@ import java.util.List;
 
 import com.pilaf.cs.users.model.User;
 
-public class UserTest extends AbstractWithUserTest {
+public class UserTestState extends AbstractWithUserTestState {
 
-	private static UserTest instance = null;
+	private static UserTestState instance = null;
 	private List<User> userList = new ArrayList<>();
 
-	private UserTest() {
+	private UserTestState() {
 		super();
 	}
 
-	public static UserTest getInstance() {
+	public static UserTestState getInstance() {
 		if (instance == null) {
-			instance = new UserTest();
+			instance = new UserTestState();
 		}
 		return instance;
 	}
 
-	public static UserTest resetData() {
-		instance = new UserTest();
+	public static UserTestState resetData() {
+		instance = new UserTestState();
 		return instance;
 	}
 
@@ -30,7 +30,7 @@ public class UserTest extends AbstractWithUserTest {
 		return userList;
 	}
 
-	public UserTest setUserList(List<User> userList) {
+	public UserTestState setUserList(List<User> userList) {
 		this.userList = userList;
 		return this;
 	}

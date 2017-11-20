@@ -2,7 +2,7 @@ package com.pilaf.cs.tests.builder;
 
 import com.pilaf.cs.users.model.User;
 
-public abstract class AbstractWithUserTest {
+public abstract class AbstractWithUserTestState {
 
 	private String authorizationToken;
 	private User returnedUser;
@@ -12,7 +12,7 @@ public abstract class AbstractWithUserTest {
 		return authorizationToken;
 	}
 
-	public AbstractWithUserTest setAuthorizationToken(String authorizationToken) {
+	public AbstractWithUserTestState setAuthorizationToken(String authorizationToken) {
 		this.authorizationToken = authorizationToken;
 		return this;
 	}
@@ -21,7 +21,7 @@ public abstract class AbstractWithUserTest {
 		return returnedUser;
 	}
 
-	public AbstractWithUserTest setReturnedUser(User returnedUser) {
+	public AbstractWithUserTestState setReturnedUser(User returnedUser) {
 		this.returnedUser = returnedUser;
 		return this;
 	}
@@ -30,7 +30,7 @@ public abstract class AbstractWithUserTest {
 		return currentHttpStatus;
 	}
 
-	public AbstractWithUserTest setCurrentHttpStatus(int currentHttpStatus) {
+	public AbstractWithUserTestState setCurrentHttpStatus(int currentHttpStatus) {
 		this.currentHttpStatus = currentHttpStatus;
 		return this;
 	}

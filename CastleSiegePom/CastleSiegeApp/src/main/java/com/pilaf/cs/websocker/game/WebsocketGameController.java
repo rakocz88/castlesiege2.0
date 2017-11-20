@@ -10,11 +10,10 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import com.pilaf.cs.game.model.GameState;
-import com.pilaf.cs.game.model.Move;
 import com.pilaf.cs.game.service.GameService;
 
 @Controller
-public class TestMsgController {
+public class WebsocketGameController {
     private GameService gameService;
 
     @Autowired
@@ -30,11 +29,19 @@ public class TestMsgController {
         return gameState;
     }
 
-    @MessageMapping("/move/{uuid}")
-    @SendTo("/topic/move/{uuid}")
-    public GameState makeMove(@DestinationVariable String uuid, Move move) {
-        GameState gameState = gameService.move(UUID.fromString(uuid), move);
+    @MessageMapping("/move")
+    public void makeMove(String move) {
+//        GameState gameState = gameService.move(UUID.fromString(uuid), move);
 
-        return gameState;
+//        return new GameState();
+    }
+    
+    @MessageMapping("/searchGame")
+    public void searchGame(Long userId) {
+    	 gameService.addPlayerToSearchGameLobby(userId);
+//    	 return new GameState();
+//        GameState gameState = gameService.move(UUID.fromString(uuid), move);
+//
+//        return gameState;
     }
 }
