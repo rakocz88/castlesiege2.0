@@ -6,13 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ContextConfiguration;
 
-//@WebAppConfiguration
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
 public class SpringIntegrationTest {
 
 	@LocalServerPort
-	public long port;
+	public int port;
 	
 	@Value("${jwt.header}")
 	public String path;

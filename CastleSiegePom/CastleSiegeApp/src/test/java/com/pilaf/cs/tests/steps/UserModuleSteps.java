@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
 import com.pilaf.cs.tests.builder.UserTestState;
+import com.pilaf.cs.tests.helper.LoginTestHelper;
 import com.pilaf.cs.users.model.User;
 
 import cucumber.api.java.en.Given;
@@ -24,6 +27,12 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;;
 
 public class UserModuleSteps extends AbstractCSTestCase {
+	
+	@Autowired
+	private LoginTestHelper loginTestHelper;
+	
+	@Autowired
+	private TestRestTemplate testRestTemplate;
 
 	@Before
 	public void resetAllData() throws InterruptedException {
@@ -38,7 +47,7 @@ public class UserModuleSteps extends AbstractCSTestCase {
 
 	@When("^AA- I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void i_try_to_get_a_token_with_the_username_and_password(String userName, String password) throws Throwable {
-		logInWithUser(userName, password, UserTestState.getInstance());
+		loginTestHelper.logInWithUser(userName, password, UserTestState.getInstance(), port);
 
 	}
 
@@ -53,11 +62,11 @@ public class UserModuleSteps extends AbstractCSTestCase {
 	@When("^AA- I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
 	public void i_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName)
 			throws Throwable {
-		MultiValueMap<String, String> headers = UserModuleTestUtils
+		MultiValueMap<String, String> headers = loginTestHelper
 				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
 		String url = String.format(GET_USER_ENDPOINT, port, userName);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<User> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, User.class);
+		ResponseEntity<User> response = testRestTemplate.exchange(url, HttpMethod.GET, httpEntity, User.class);
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 		UserTestState.getInstance().setReturnedUser(response.getBody());
 	}
@@ -80,10 +89,10 @@ public class UserModuleSteps extends AbstractCSTestCase {
 	@When("^AA- I try to get all the users with non admin user$")
 	public void i_try_to_get_all_the_users_with_non_admin_user() throws Throwable {
 		String url = String.format(GET_ALL_USERy_ENDPOINT, port);
-		MultiValueMap<String, String> headers = UserModuleTestUtils
+		MultiValueMap<String, String> headers = loginTestHelper
 				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		ResponseEntity<String> response = testRestTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 	}
 	
@@ -95,7 +104,7 @@ public class UserModuleSteps extends AbstractCSTestCase {
 	
 	@When("^AE- I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void ae_I_try_to_get_a_token_with_the_username_and_password(String userName, String password) throws Throwable {
-		logInWithUser(userName, password, UserTestState.getInstance());
+		loginTestHelper.logInWithUser(userName, password, UserTestState.getInstance(), port);
 	}
 	
 	@Then("^AE- I should get a request with status code (\\d+) and a token in it$")
@@ -109,11 +118,11 @@ public class UserModuleSteps extends AbstractCSTestCase {
 	@When("^AE- I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
 	public void ae_I_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-		MultiValueMap<String, String> headers = UserModuleTestUtils
+		MultiValueMap<String, String> headers = loginTestHelper
 				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
 		String url = String.format(GET_USER_ENDPOINT, port, userName);
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<User> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, User.class);
+		ResponseEntity<User> response = testRestTemplate.exchange(url, HttpMethod.GET, httpEntity, User.class);
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 		UserTestState.getInstance().setReturnedUser(response.getBody());
 	}
@@ -130,10 +139,10 @@ public class UserModuleSteps extends AbstractCSTestCase {
 	@When("^AE- I try to get all the users$")
 	public void ae_I_try_to_get_all_the_users() throws Throwable {
 		String url = String.format(GET_ALL_USERy_ENDPOINT, port);
-		MultiValueMap<String, String> headers = UserModuleTestUtils
+		MultiValueMap<String, String> headers = loginTestHelper
 				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
 		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-		ResponseEntity<User[]> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, User[].class);
+		ResponseEntity<User[]> response = testRestTemplate.exchange(url, HttpMethod.GET, httpEntity, User[].class);
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 		UserTestState.getInstance().setUserList(new ArrayList<>(Arrays.asList(response.getBody())));
 	}

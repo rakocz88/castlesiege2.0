@@ -8,13 +8,23 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.pilaf.cs.tests.builder.WebSocketSecurityTestState;
+import com.pilaf.cs.tests.helper.LoginTestHelper;
+import com.pilaf.cs.tests.helper.WebSocketTestHelper;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class WebSocketSecuritySteps extends AbstractCSTestCase {
+	
+	@Autowired
+	private LoginTestHelper loginTestHelper;
+	
+	@Autowired
+	private WebSocketTestHelper webSocketTestHelper;
 
 	@Given("^ADa- I am a user that is not loged in$")
 	public void ada_I_am_a_user_that_is_not_loged_in() throws Throwable {
@@ -23,13 +33,13 @@ public class WebSocketSecuritySteps extends AbstractCSTestCase {
 
 	@Then("^ADa- I should get the response with the text \"([^\"]*)\"$")
 	public void ada_I_should_get_the_response_with_the_text(String text) throws Throwable {
-		System.out.println("OK");
+		//TODO
 	}
 
 	@When("^ADa- I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void ada_I_try_to_get_a_token_with_the_username_and_password(String username, String password)
 			throws Throwable {
-		logInWithUser(username, password, WebSocketSecurityTestState.getInstance());
+		loginTestHelper.logInWithUser(username, password, WebSocketSecurityTestState.getInstance(), port);
 	}
 
 	@Then("^ADa- I should get a request with status code (\\d+) and a token in it$")
@@ -44,7 +54,7 @@ public class WebSocketSecuritySteps extends AbstractCSTestCase {
 	public void ada_I_try_to_create_a_connection_to_the_websocket_and_subscribe_to_the_channel_on_the_host(
 			String websocketname, String chanel, String host) throws Throwable {
 		String URL = String.format("ws://%s:%d/%s", host, port, websocketname);
-		connectAndSubscribeToChannel(URL, chanel, WebSocketSecurityTestState.getInstance());
+		webSocketTestHelper.connectAndSubscribeToChannel(URL, chanel, WebSocketSecurityTestState.getInstance());
 	}
 
 	@When("^ADa- I try to send a test message with the text \"([^\"]*)\" to the chanel \"([^\"]*)\"$")
@@ -64,7 +74,7 @@ public class WebSocketSecuritySteps extends AbstractCSTestCase {
 	public void adb_I_try_to_create_a_connection_to_the_websocket_and_subscribe_to_the_channel_on_the_host(
 			String websocketname, String chanel, String host) throws Throwable {
 		String URL = String.format("ws://%s:%d/%s", host, port, websocketname);
-		connectAndSubscribeToChannel(URL, chanel, WebSocketSecurityTestState.getInstance());
+		webSocketTestHelper.connectAndSubscribeToChannel(URL, chanel, WebSocketSecurityTestState.getInstance());
 	}
 
 	@Then("^ADb- The operation should fail$")

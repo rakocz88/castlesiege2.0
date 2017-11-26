@@ -21,6 +21,8 @@ import com.pilaf.cs.game.search.repository.UserSearchGameRepository;
 import com.pilaf.cs.game.service.MaximumGamesHolder;
 import com.pilaf.cs.tests.builder.GameBasicScenarioSingleUser;
 import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
+import com.pilaf.cs.tests.helper.LoginTestHelper;
+import com.pilaf.cs.tests.helper.WebSocketTestHelper;
 import com.pilaf.cs.users.repository.UserRepository;
 
 import cucumber.api.java.en.Given;
@@ -41,26 +43,11 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 	@Autowired
 	private MaximumGamesHolder maxHameHolder;
 
-	@Then("^(\\d+) user of the users \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" should still be searching for a room to play$")
-	public void user_of_the_users_should_still_be_searching_for_a_room_to_play(int amountOfUsers, String user1,
-			String user2, String user3, String user4, String user5) throws Throwable {
-		long playersSearching = userSearchGameRepository.count();
-		assertThat("Wrong number of users searching", playersSearching, equalTo(new Long(amountOfUsers)));
-	}
+	@Autowired
+	private LoginTestHelper loginTestHelper;
 
-	@Then("^the game should be set as started$")
-	public void the_game_should_be_set_as_started() throws Throwable {
-	}
-
-	@Given("^The number of maximum games is set to (\\d+)$")
-	public void the_number_of_maximum_games_is_set_to(int maxGames) throws Throwable {
-		maxHameHolder.setMaximumGames(maxGames);
-	}
-
-	@Then("^restert the amount of max games to default value;$")
-	public void restert_the_amount_of_max_games_to_default_value() throws Throwable {
-		maxHameHolder.resetToDefault();
-	}
+	@Autowired
+	private WebSocketTestHelper websocketTestHelper;
 
 	@Given("^AFa- There are (\\d+) players that are not logged in$")
 	public void afa_There_are_players_that_are_not_logged_in(int players) throws Throwable {
@@ -74,7 +61,8 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 	@When("^AFa- I try to log in with \"([^\"]*)\" \"([^\"]*)\"$")
 	public void afa_I_try_to_log_in_with(String username, String password) throws Throwable {
 		GameBasicScenarioTestState.getInstance().addToUserMap(username, new GameBasicScenarioSingleUser());
-		logInWithUser(username, password, GameBasicScenarioTestState.getInstance().getUserMap().get(username));
+		loginTestHelper.logInWithUser(username, password,
+				GameBasicScenarioTestState.getInstance().getUserMap().get(username), port);
 	}
 
 	@Then("^AFa- The user \"([^\"]*)\" should have a valid token$")
@@ -101,7 +89,8 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 	@When("^AFa- Another user tries to log in with \"([^\"]*)\" \"([^\"]*)\"$")
 	public void afa_Another_user_tries_to_log_in_with(String username, String password) throws Throwable {
 		GameBasicScenarioTestState.getInstance().addToUserMap(username, new GameBasicScenarioSingleUser());
-		logInWithUser(username, password, GameBasicScenarioTestState.getInstance().getUserMap().get(username));
+		loginTestHelper.logInWithUser(username, password,
+				GameBasicScenarioTestState.getInstance().getUserMap().get(username), port);
 	}
 
 	@Then("^AFa- The user \"([^\"]*)\" should get a msg that a game is found$")
@@ -118,7 +107,8 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 	@Then("^AFa- The user \"([^\"]*)\" should subscribe to the new game channel$")
 	public void afa_The_user_should_subscribe_to_the_new_game_channel(String username) throws Throwable {
 		String URL = String.format("ws://%s:%d/%s", "localhost", port, "game");
-		connectAndSubscribeToChannel(URL, "/topic/duel/" + GameBasicScenarioTestState.getInstance().getGameId(),
+		websocketTestHelper.connectAndSubscribeToChannel(URL,
+				"/topic/duel/" + GameBasicScenarioTestState.getInstance().getGameId(),
 				GameBasicScenarioTestState.getInstance().getUserMap().get(username));
 	}
 
@@ -153,15 +143,20 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 			String pass3, String user4, String pass4, String user5, String pass5) throws Throwable {
 		// TODO refactor common method
 		GameBasicScenarioTestState.getInstance().addToUserMap(user1, new GameBasicScenarioSingleUser());
-		logInWithUser(user1, pass1, GameBasicScenarioTestState.getInstance().getUserMap().get(user1));
+		loginTestHelper.logInWithUser(user1, pass1, GameBasicScenarioTestState.getInstance().getUserMap().get(user1),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user2, new GameBasicScenarioSingleUser());
-		logInWithUser(user2, pass2, GameBasicScenarioTestState.getInstance().getUserMap().get(user2));
+		loginTestHelper.logInWithUser(user2, pass2, GameBasicScenarioTestState.getInstance().getUserMap().get(user2),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user3, new GameBasicScenarioSingleUser());
-		logInWithUser(user3, pass3, GameBasicScenarioTestState.getInstance().getUserMap().get(user3));
+		loginTestHelper.logInWithUser(user3, pass3, GameBasicScenarioTestState.getInstance().getUserMap().get(user3),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user4, new GameBasicScenarioSingleUser());
-		logInWithUser(user4, pass4, GameBasicScenarioTestState.getInstance().getUserMap().get(user4));
+		loginTestHelper.logInWithUser(user4, pass4, GameBasicScenarioTestState.getInstance().getUserMap().get(user4),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user5, new GameBasicScenarioSingleUser());
-		logInWithUser(user5, pass5, GameBasicScenarioTestState.getInstance().getUserMap().get(user5));
+		loginTestHelper.logInWithUser(user5, pass5, GameBasicScenarioTestState.getInstance().getUserMap().get(user5),
+				port);
 	}
 
 	@Then("^AFb- All the users should have valid tokens$")
@@ -231,15 +226,20 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 			String pass3, String user4, String pass4, String user5, String pass5) throws Throwable {
 		// TODO refactor common method;
 		GameBasicScenarioTestState.getInstance().addToUserMap(user1, new GameBasicScenarioSingleUser());
-		logInWithUser(user1, pass1, GameBasicScenarioTestState.getInstance().getUserMap().get(user1));
+		loginTestHelper.logInWithUser(user1, pass1, GameBasicScenarioTestState.getInstance().getUserMap().get(user1),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user2, new GameBasicScenarioSingleUser());
-		logInWithUser(user2, pass2, GameBasicScenarioTestState.getInstance().getUserMap().get(user2));
+		loginTestHelper.logInWithUser(user2, pass2, GameBasicScenarioTestState.getInstance().getUserMap().get(user2),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user3, new GameBasicScenarioSingleUser());
-		logInWithUser(user3, pass3, GameBasicScenarioTestState.getInstance().getUserMap().get(user3));
+		loginTestHelper.logInWithUser(user3, pass3, GameBasicScenarioTestState.getInstance().getUserMap().get(user3),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user4, new GameBasicScenarioSingleUser());
-		logInWithUser(user4, pass4, GameBasicScenarioTestState.getInstance().getUserMap().get(user4));
+		loginTestHelper.logInWithUser(user4, pass4, GameBasicScenarioTestState.getInstance().getUserMap().get(user4),
+				port);
 		GameBasicScenarioTestState.getInstance().addToUserMap(user5, new GameBasicScenarioSingleUser());
-		logInWithUser(user5, pass5, GameBasicScenarioTestState.getInstance().getUserMap().get(user5));
+		loginTestHelper.logInWithUser(user5, pass5, GameBasicScenarioTestState.getInstance().getUserMap().get(user5),
+				port);
 	}
 
 	@Then("^AG- All the users should have valid tokens$")
@@ -288,7 +288,7 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 			throws InterruptedException, ExecutionException, TimeoutException {
 		long userId = userRepository.findByUsername(userName).getId();
 		String URL = String.format("ws://%s:%d/%s", "localhost", port, "game");
-		connectAndSubscribeToChannel(URL, "/topic/foundGames",
+		websocketTestHelper.connectAndSubscribeToChannel(URL, "/topic/foundGames",
 				GameBasicScenarioTestState.getInstance().getUserMap().get(userName));
 		CompletableFuture completableFuture = GameBasicScenarioTestState.getInstance().getUserMap().get(userName)
 				.getCompletableFuture();

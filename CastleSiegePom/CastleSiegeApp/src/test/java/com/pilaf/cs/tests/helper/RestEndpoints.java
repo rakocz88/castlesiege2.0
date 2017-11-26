@@ -1,4 +1,4 @@
-package com.pilaf.cs.tests.steps;
+package com.pilaf.cs.tests.helper;
 
 public interface RestEndpoints {
 	
