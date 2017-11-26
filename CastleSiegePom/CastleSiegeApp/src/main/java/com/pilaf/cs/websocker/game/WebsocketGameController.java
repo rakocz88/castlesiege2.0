@@ -24,6 +24,7 @@ public class WebsocketGameController {
     @MessageMapping("/create/{uuid}")
     @SendTo("/topic/board/{uuid}")
     public GameState createGame(@DestinationVariable String uuid) {
+    	
         GameState gameState = gameService.createGame(UUID.fromString(uuid));
 
         return gameState;
@@ -31,17 +32,16 @@ public class WebsocketGameController {
 
     @MessageMapping("/move")
     public void makeMove(String move) {
-//        GameState gameState = gameService.move(UUID.fromString(uuid), move);
-
-//        return new GameState();
     }
     
     @MessageMapping("/searchGame")
     public void searchGame(Long userId) {
     	 gameService.addPlayerToSearchGameLobby(userId);
-//    	 return new GameState();
-//        GameState gameState = gameService.move(UUID.fromString(uuid), move);
-//
-//        return gameState;
+    }
+    
+    @MessageMapping("/duel/{uuid}")
+    @SendTo("/topic/duel/{uuid}")
+    public String gameChannel(@DestinationVariable String uuid) {
+       return "someAction";
     }
 }

@@ -7,7 +7,7 @@ public class GameBasicScenarioTestState {
 
 	private static GameBasicScenarioTestState gameBasicScenarioTestState = new GameBasicScenarioTestState();
 
-	private String gameId;
+	private static String gameId;
 
 	private GameBasicScenarioTestState() {
 		super();
@@ -40,6 +40,11 @@ public class GameBasicScenarioTestState {
 
 	public static GameBasicScenarioTestState getInstance() {
 		return gameBasicScenarioTestState;
+	}
+
+	public static void reset() {
+		gameBasicScenarioTestState = new GameBasicScenarioTestState();
+		gameId = null;
 	}
 
 }
