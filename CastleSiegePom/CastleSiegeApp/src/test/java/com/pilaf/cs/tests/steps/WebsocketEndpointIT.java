@@ -34,8 +34,9 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import com.pilaf.cs.game.model.GameState;
-import com.pilaf.cs.game.model.Move;
+import com.pilaf.cs.game.search.model.GameState;
+import com.pilaf.cs.game.search.model.Move;
+
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

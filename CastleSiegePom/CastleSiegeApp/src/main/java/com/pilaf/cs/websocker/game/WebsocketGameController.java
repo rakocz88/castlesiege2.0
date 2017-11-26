@@ -9,7 +9,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import com.pilaf.cs.game.model.GameState;
+import com.pilaf.cs.game.search.model.GameState;
 import com.pilaf.cs.game.service.GameService;
 
 @Controller

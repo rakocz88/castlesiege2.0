@@ -44,7 +44,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.pilaf.cs</groupId>
-			<artifactId>CastleSiegeGame</artifactId>
+			<artifactId>CastleSiegeSearchGame</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

@@ -14,10 +14,10 @@ import java.util.concurrent.TimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.stomp.StompSession;
 
-import com.pilaf.cs.game.model.CreatedGame;
-import com.pilaf.cs.game.model.UserSearchGame;
-import com.pilaf.cs.game.repository.CreatedGameRepository;
-import com.pilaf.cs.game.repository.UserSearchGameRepository;
+import com.pilaf.cs.game.search.model.CreatedGame;
+import com.pilaf.cs.game.search.model.UserSearchGame;
+import com.pilaf.cs.game.search.repository.CreatedGameRepository;
+import com.pilaf.cs.game.search.repository.UserSearchGameRepository;
 import com.pilaf.cs.game.service.MaximumGamesHolder;
 import com.pilaf.cs.tests.builder.GameBasicScenarioSingleUser;
 import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
@@ -201,8 +201,6 @@ public class GameBasicScenarioSteps extends AbstractCSTestCase {
 
 	@Then("^the game should be set as started$")
 	public void the_game_should_be_set_as_started() throws Throwable {
-		// // Write code here that turns the phrase above into concrete actions
-		// throw new PendingException();
 	}
 
 	@Given("^The number of maximum games is set to (\\d+)$")

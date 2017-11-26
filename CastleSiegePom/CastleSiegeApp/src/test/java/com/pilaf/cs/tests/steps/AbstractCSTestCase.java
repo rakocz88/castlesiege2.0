@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -25,13 +24,11 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import com.pilaf.cs.game.model.GameState;
 import com.pilaf.cs.security.JwtAuthenticationRequest;
 import com.pilaf.cs.security.JwtAuthenticationResponse;
 import com.pilaf.cs.tests.SpringIntegrationTest;
-import com.pilaf.cs.tests.builder.AbstractWithUserTestState;
-import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
 import com.pilaf.cs.tests.builder.AbstractWebSocketSecurityTestState;
+import com.pilaf.cs.tests.builder.AbstractWithUserTestState;
 import com.pilaf.cs.users.model.User;
 
 public abstract class AbstractCSTestCase extends SpringIntegrationTest implements RestEndpoints {
