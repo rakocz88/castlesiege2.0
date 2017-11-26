@@ -31,18 +31,18 @@ public class UserModuleSteps extends AbstractCSTestCase {
 		UserTestState.resetData();
 	}
 
-	@Given("^I am a user that is not loged in$")
+	@Given("^AA- I am a user that is not loged in$")
 	public void i_am_a_user_that_is_not_loged_in() throws Throwable {
 		UserTestState.resetData();
 	}
 
-	@When("^I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
+	@When("^AA- I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void i_try_to_get_a_token_with_the_username_and_password(String userName, String password) throws Throwable {
 		logInWithUser(userName, password, UserTestState.getInstance());
 
 	}
 
-	@Then("^I should get a request with status code (\\d+) and a token in it$")
+	@Then("^AA- I should get a request with status code (\\d+) and a token in it$")
 	public void i_should_get_a_request_with_status_code_and_a_token_in_it(int expectedStatusCode) throws Throwable {
 		assertThat("Response Status is invalid", UserTestState.getInstance().getCurrentHttpStatus(),
 				equalTo(expectedStatusCode));
@@ -50,7 +50,7 @@ public class UserModuleSteps extends AbstractCSTestCase {
 				is(not(isEmptyOrNullString())));
 	}
 
-	@When("^I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
+	@When("^AA- I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
 	public void i_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName)
 			throws Throwable {
 		MultiValueMap<String, String> headers = UserModuleTestUtils
@@ -62,7 +62,7 @@ public class UserModuleSteps extends AbstractCSTestCase {
 		UserTestState.getInstance().setReturnedUser(response.getBody());
 	}
 
-	@Then("^I should get the response status (\\d+) and a  user \"([^\"]*)\" in the response$")
+	@Then("^AA- I should get the response status (\\d+) and a  user \"([^\"]*)\" in the response$")
 	public void i_should_get_the_response_status_and_a_user_in_the_response(int statusCode, String userName)
 			throws Throwable {
 		assertThat("Wrong http status", UserTestState.getInstance().getCurrentHttpStatus(), equalTo(statusCode));
@@ -72,12 +72,12 @@ public class UserModuleSteps extends AbstractCSTestCase {
 
 	}
 
-	@Then("^I should get the response status (\\d+)$")
+	@Then("^AA- I should get the response status (\\d+)$")
 	public void i_should_get_the_response_status(int responseStatus) throws Throwable {
 		assertThat("Wrong http status", UserTestState.getInstance().getCurrentHttpStatus(), equalTo(responseStatus));
 	}
 
-	@When("^I try to get all the users with non admin user$")
+	@When("^AA- I try to get all the users with non admin user$")
 	public void i_try_to_get_all_the_users_with_non_admin_user() throws Throwable {
 		String url = String.format(GET_ALL_USERy_ENDPOINT, port);
 		MultiValueMap<String, String> headers = UserModuleTestUtils
@@ -86,9 +86,49 @@ public class UserModuleSteps extends AbstractCSTestCase {
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 	}
+	
+	
+	@Given("^AE- I am a user that is not loged in$")
+	public void ae_i_am_a_user_that_is_not_loged_in() throws Throwable {
+		UserTestState.resetData();
+	}
+	
+	@When("^AE- I try to get a token with the username \"([^\"]*)\" and password \"([^\"]*)\"$")
+	public void ae_I_try_to_get_a_token_with_the_username_and_password(String userName, String password) throws Throwable {
+		logInWithUser(userName, password, UserTestState.getInstance());
+	}
+	
+	@Then("^AE- I should get a request with status code (\\d+) and a token in it$")
+	public void ae_I_should_get_a_request_with_status_code_and_a_token_in_it(int expectedStatusCode) throws Throwable {
+		assertThat("Response Status is invalid", UserTestState.getInstance().getCurrentHttpStatus(),
+				equalTo(expectedStatusCode));
+		assertThat("Response should contain token", UserTestState.getInstance().getAuthorizationToken(),
+				is(not(isEmptyOrNullString())));
+	}
+	
+	@When("^AE- I try to get the restEndpoint for information for user \"([^\"]*)\" with the token$")
+	public void ae_I_try_to_get_the_restEndpoint_for_information_for_user_with_the_token(String userName) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		MultiValueMap<String, String> headers = UserModuleTestUtils
+				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
+		String url = String.format(GET_USER_ENDPOINT, port, userName);
+		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+		ResponseEntity<User> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, User.class);
+		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
+		UserTestState.getInstance().setReturnedUser(response.getBody());
+	}
+	
+	@Then("^AE- I should get the response status (\\d+) and a  user \"([^\"]*)\" in the response$")
+	public void ae_I_should_get_the_response_status_and_a_user_in_the_response(int statusCode, String userName) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		assertThat("Wrong http status", UserTestState.getInstance().getCurrentHttpStatus(), equalTo(statusCode));
+		assertThat("User should not be null", UserTestState.getInstance().getReturnedUser(), notNullValue());
+		assertThat("User name should be " + userName, UserTestState.getInstance().getReturnedUser().getUsername(),
+				equalTo(userName));
+	}
 
-	@When("^I try to get all the users$")
-	public void i_try_to_get_all_the_users() throws Throwable {
+	@When("^AE- I try to get all the users$")
+	public void ae_I_try_to_get_all_the_users() throws Throwable {
 		String url = String.format(GET_ALL_USERy_ENDPOINT, port);
 		MultiValueMap<String, String> headers = UserModuleTestUtils
 				.getHeaders(UserTestState.getInstance().getAuthorizationToken());
@@ -97,9 +137,15 @@ public class UserModuleSteps extends AbstractCSTestCase {
 		UserTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 		UserTestState.getInstance().setUserList(new ArrayList<>(Arrays.asList(response.getBody())));
 	}
+	
+	@Then("^AE- I should get the response status (\\d+)$")
+	public void ae_I_should_get_the_response_status(int responseStatus) throws Throwable {
+		assertThat("Wrong http status", UserTestState.getInstance().getCurrentHttpStatus(), equalTo(responseStatus));
+	}
 
-	@Then("^The list of users should not be empty$")
-	public void the_list_of_users_should_not_be_empty() throws Throwable {
+
+	@Then("^AE- The list of users should not be empty$")
+	public void ae_The_list_of_users_should_not_be_empty() throws Throwable {
 		assertThat("UserListShouldNotBeEmpty", UserTestState.getInstance().getUserList().isEmpty(), is(false));
 	}
 

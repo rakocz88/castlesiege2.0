@@ -7,7 +7,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = { "pretty", "html:target/results" }, strict = false, glue = {
-		"com.pilaf.cs.tests.steps" }, features = { "classpath:scenario/userModule.feature",
-				"classpath:scenario/websocketSecurity.feature", "classpath:scenario/gameBasicScenario.feature" })
+		"com.pilaf.cs.tests.steps" }, features = { "classpath:scenario/userModuleScenarios.feature",
+				"classpath:scenario/websocketSecurityScenarios.feature", "classpath:scenario/gameSearchScenarios.feature" })
 public class RunBDDTest {
 }
