@@ -1,4 +1,4 @@
-package com.pilaf.cs.tests.builder;
+package com.pilaf.cs.tests.helper;
 
 import java.util.concurrent.CompletableFuture;
 

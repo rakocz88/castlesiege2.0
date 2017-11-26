@@ -28,10 +28,10 @@ Scenario: AE- I want to log in as a admin user
 Scenario: AB- I want to register a new user
 	Given AB- I am a person who wants to create a account
 	When AB- A user with username "filip" exists in the database
-	When AB- I register a user with login  "filip" and password "filip" and firstname  "filip" and surname "filip" and login "filip@gmail.com"
+	When AB- I register a user with login  "filip" and password "filip" and firstname  "filip" and surname "filip" and email "filip@gmail.com"
 	Then AB- I should get a response with status 400
 	When AB- User "flap" does not exist in the database
-	And AB- I register a user with login  "flap" and password "flap" and firstname  "flap" and surname "flap" and login "rakocz88@gmail.com"
+	And AB- I register a user with login  "flap" and password "flap" and firstname  "flap" and surname "flap" and email "rakocz88@gmail.com"
 	Then AB- I should get the response status 200
 	And AB- User "flap" should be in the database
 	And AB- User "flap" enabled flag should be "false"

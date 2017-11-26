@@ -1,4 +1,4 @@
-package com.pilaf.cs.tests.steps;
+package com.pilaf.cs.tests.steps.websocket;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +18,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class WebSocketSecuritySteps extends AbstractCSTestCase {
+public class WebSocketSecuritySteps extends AbstractWebsocketScenarioTestCase {
 	
 	@Autowired
 	private LoginTestHelper loginTestHelper;
