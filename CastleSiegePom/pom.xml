@@ -11,5 +11,6 @@
 		<module>CastleSiegeUsers</module>
 		<module>CastleSiegeApp</module>
 		<module>CastleSiegeNotification</module>
+		<module>CastleSiegeCommonApi</module>
 	</modules>
 </project>

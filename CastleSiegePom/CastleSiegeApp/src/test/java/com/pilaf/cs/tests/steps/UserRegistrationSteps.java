@@ -28,9 +28,9 @@ import cucumber.api.java.en.When;;
 
 public class UserRegistrationSteps extends AbstractCSTestCase {
 
-	private ClientHttpRequestFactory requestFactory = new     
-		      HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-	
+	private ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+			HttpClients.createDefault());
+
 	private TestRestTemplate restTemplate = new TestRestTemplate(new RestTemplate(requestFactory));
 
 	@Autowired
@@ -45,41 +45,47 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 		UserRegistrationTestState.resetData();
 	}
 
-	@Given("^I am a person who wants to create a account$")
-	public void i_am_a_person_who_wants_to_create_a_account() throws Throwable {
+	@Given("^AB- I am a person who wants to create a account$")
+	public void ab_I_am_a_person_who_wants_to_create_a_account() throws Throwable {
 		UserRegistrationTestState.resetData();
 	}
 
-	@When("^A user with username \"([^\"]*)\" exists in the database$")
-	public void a_user_with_username_exists_in_the_database(String name) throws Throwable {
+	@When("^AB- A user with username \"([^\"]*)\" exists in the database$")
+	public void ab_A_user_with_username_exists_in_the_database(String name) throws Throwable {
 		assertThat("User should exist in database", userRepository.findByUsername(name), is(notNullValue()));
 	}
 
-	@Then("^I should get a response with status (\\d+)$")
-	public void i_should_get_a_response_with_status(int statusCode) throws Throwable {
-		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(), equalTo(statusCode));
+	@Then("^AB- I should get a response with status (\\d+)$")
+	public void ab_I_should_get_a_response_with_status(int statusCode) throws Throwable {
+		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(),
+				equalTo(statusCode));
 	}
 
-	@When("^User \"([^\"]*)\" does not exist in the database$")
-	public void user_does_not_exist_in_the_database(String username) throws Throwable {
+	@Then("^AB- I should get the response status (\\d+)$")
+	public void ab_I_should_get_the_response_status(int statusCode) throws Throwable {
+		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(),
+				equalTo(statusCode));
+	}
+
+	@When("^AB- User \"([^\"]*)\" does not exist in the database$")
+	public void ab_User_does_not_exist_in_the_database(String username) throws Throwable {
 		assertThat("User should not exist in the database", userRepository.findByUsername(username), is(nullValue()));
 	}
 
-	@Then("^User \"([^\"]*)\" enabled flag should be \"([^\"]*)\"$")
-	public void user_enabled_flag_should_be(String name, String enabled) throws Throwable {
+	@Then("^AB- User \"([^\"]*)\" enabled flag should be \"([^\"]*)\"$")
+	public void ab_User_enabled_flag_should_be(String name, String enabled) throws Throwable {
 		assertThat("User enabled flag should be", userRepository.findByUsername(name).getEnabled(),
 				equalTo(Boolean.parseBoolean(enabled)));
 	}
 
-	@Then("^in the output msg there should be an entry for user \"([^\"]*)\" and it should not be empty$")
-	public void in_the_output_msg_there_should_be_an_entry_for_user_and_it_should_not_be_empty(String username)
+	@Then("^AB- in the output msg there should be an entry for user \"([^\"]*)\" and it should not be empty$")
+	public void ab_in_the_output_msg_there_should_be_an_entry_for_user_and_it_should_not_be_empty(String username)
 			throws Throwable {
 		assertThat("Email should be send to user", emailBiz.findAllByUser(username).isEmpty(), equalTo(false));
 	}
 
-	@When("^I try to perform a log in with the user \"([^\"]*)\" with password \"([^\"]*)\"$")
-	public void i_try_to_perform_a_log_in_with_the_user_with_password(String username, String password)
-			throws Throwable {
+	@When("^AB- I try to perform a log in with the user \"([^\"]*)\" with password \"([^\"]*)\"$")
+	public void ab_I_try_to_perform_a_log_in_with_the_user_with_password(String username, String password) throws Throwable {
 		User user = new User(username, password);
 		UserRegistrationTestState.getInstance().setReturnedUser(user);
 		String url = String.format(LOGIN_ENDPOINT, port);
@@ -92,30 +98,26 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCode().value());
 	}
 
-	@Then("^I should get the response (\\d+)$")
-	public void i_should_get_the_response(int resposeCode) throws Throwable {
+	@Then("^AB- I should get the response (\\d+)$")
+	public void ab_I_should_get_the_response(int resposeCode) throws Throwable {
 		assertThat("Wrong status code", UserRegistrationTestState.getInstance().getCurrentHttpStatus(),
 				equalTo(resposeCode));
 	}
 
-
-
-	@Then("^User \"([^\"]*)\" should be in the database$")
-	public void user_should_be_in_the_database(String username) throws Throwable {
-		assertThat("User should exist in the database", userRepository.findByUsername(username),
-				is(notNullValue()));
+	@Then("^AB- User \"([^\"]*)\" should be in the database$")
+	public void ab_User_should_be_in_the_database(String username) throws Throwable {
+		assertThat("User should exist in the database", userRepository.findByUsername(username), is(notNullValue()));
 	}
 
-
-	@Then("^the response should contain a not empty token$")
-	public void the_response_should_contain_a_not_empty_token() throws Throwable {
+	@Then("^AB- the response should contain a not empty token$")
+	public void ab_the_response_should_contain_a_not_empty_token() throws Throwable {
 		assertThat("Token should not be empty", UserRegistrationTestState.getInstance().getAuthorizationToken(),
 				is(notNullValue()));
 	}
-	
-	
-	@When("^I register a user with login  \"([^\"]*)\" and password \"([^\"]*)\" and firstname  \"([^\"]*)\" and surname \"([^\"]*)\" and login \"([^\"]*)\"$")
-	public void i_register_a_user_with_login_and_password_and_firstname_and_surname_and_login(String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
+
+	@When("^AB- I register a user with login  \"([^\"]*)\" and password \"([^\"]*)\" and firstname  \"([^\"]*)\" and surname \"([^\"]*)\" and login \"([^\"]*)\"$")
+	public void ab_I_register_a_user_with_login_and_password_and_firstname_and_surname_and_login(String arg1,
+			String arg2, String arg3, String arg4, String arg5) throws Throwable {
 		User user = new User(arg1, arg2);
 		user.setEmail(arg5);
 		user.setLastname(arg3);
@@ -125,20 +127,17 @@ public class UserRegistrationSteps extends AbstractCSTestCase {
 		ResponseEntity<String> response = restTemplate.postForEntity(url, user, String.class);
 		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
 	}
-	
-	@When("^I click the link then was send to \"([^\"]*)\"$")
-	public void i_click_the_link_then_was_send_to(String email) throws Throwable {
-		String activationLink = emailBiz
-				.getLastEmailForUser(email).getMessage();
+
+	@When("^AB- I click the link then was send to \"([^\"]*)\"$")
+	public void ab_I_click_the_link_then_was_send_to(String email) throws Throwable {
+		String activationLink = emailBiz.getLastEmailForUser(email).getMessage();
 		String path = String.format(ACTIVATION_ENDPOINT, port, activationLink);
 		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
 		Thread.sleep(1000l);
-		User user = userRepository.findByUsername(UserRegistrationTestState.getInstance().getReturnedUser().getUsername());
+		User user = userRepository
+				.findByUsername(UserRegistrationTestState.getInstance().getReturnedUser().getUsername());
 		UserRegistrationTestState.getInstance().setReturnedUser(user);
 		UserRegistrationTestState.getInstance().setCurrentHttpStatus(response.getStatusCodeValue());
 	}
-	
-	
-	
 
 }
