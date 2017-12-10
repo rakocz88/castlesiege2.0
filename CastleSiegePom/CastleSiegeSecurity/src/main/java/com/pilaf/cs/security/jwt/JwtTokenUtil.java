@@ -1,4 +1,4 @@
-package com.pilaf.cs.security;
+package com.pilaf.cs.security.jwt;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +16,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.pilaf.cs.util.TimeProvider;
+import com.pilaf.cs.security.TimeProvider;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

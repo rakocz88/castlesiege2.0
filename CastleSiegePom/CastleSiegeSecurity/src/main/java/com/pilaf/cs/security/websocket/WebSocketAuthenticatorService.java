@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import com.pilaf.cs.security.JwtTokenUtil;
+import com.pilaf.cs.security.jwt.JwtTokenUtil;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.users.repository.UserRepository;
 

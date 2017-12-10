@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.pilaf.cs.security.JwtAuthenticationRequest;
-import com.pilaf.cs.security.JwtAuthenticationResponse;
+import com.pilaf.cs.security.jwt.JwtAuthenticationRequest;
+import com.pilaf.cs.security.jwt.JwtAuthenticationResponse;
 import com.pilaf.cs.tests.builder.AbstractWithUserTestState;
 import com.pilaf.cs.users.model.User;
 

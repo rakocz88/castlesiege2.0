@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pilaf.cs.security.JwtAuthenticationRequest;
-import com.pilaf.cs.security.JwtAuthenticationResponse;
-import com.pilaf.cs.security.JwtTokenUtil;
-import com.pilaf.cs.security.UserAuth;
+import com.pilaf.cs.security.jwt.JwtAuthenticationRequest;
+import com.pilaf.cs.security.jwt.JwtAuthenticationResponse;
+import com.pilaf.cs.security.jwt.JwtTokenUtil;
+import com.pilaf.cs.security.jwt.UserAuth;
 
 @RestController
 public class AuthenticationRestController extends AbstractRestController {
@@ -68,8 +68,7 @@ public class AuthenticationRestController extends AbstractRestController {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
         } else {
-        	throw new RuntimeException("dupa");
-//            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 

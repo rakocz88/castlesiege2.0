@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pilaf.cs.rest.AbstractRestController;
-import com.pilaf.cs.security.JwtTokenUtil;
-import com.pilaf.cs.security.UserAuth;
+import com.pilaf.cs.security.jwt.JwtTokenUtil;
+import com.pilaf.cs.security.jwt.UserAuth;
 import com.pilaf.cs.users.biz.UserBiz;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.validator.UserRestValidator;

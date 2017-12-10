@@ -1,4 +1,4 @@
-package com.pilaf.cs.security;
+package com.pilaf.cs.security.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

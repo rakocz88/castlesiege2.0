@@ -8,7 +8,7 @@ import javax.xml.ws.http.HTTPException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import com.pilaf.cs.security.UserAuth;
+import com.pilaf.cs.security.jwt.UserAuth;
 import com.pilaf.cs.users.model.AuthorityName;
 
 @Component

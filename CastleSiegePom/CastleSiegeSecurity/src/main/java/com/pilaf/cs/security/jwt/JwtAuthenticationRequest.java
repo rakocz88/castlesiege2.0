@@ -1,4 +1,4 @@
-package com.pilaf.cs.security;
+package com.pilaf.cs.security.jwt;
 
 import java.io.Serializable;
 

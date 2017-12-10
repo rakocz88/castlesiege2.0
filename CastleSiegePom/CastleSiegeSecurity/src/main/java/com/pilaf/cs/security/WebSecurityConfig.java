@@ -1,4 +1,4 @@
-package com.pilaf.cs.config;
+package com.pilaf.cs.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.pilaf.cs.security.JwtAuthenticationEntryPoint;
-import com.pilaf.cs.security.JwtAuthenticationTokenFilter;
+import com.pilaf.cs.security.jwt.JwtAuthenticationEntryPoint;
+import com.pilaf.cs.security.jwt.JwtAuthenticationTokenFilter;
+
 
 @Configuration
 @EnableWebSecurity

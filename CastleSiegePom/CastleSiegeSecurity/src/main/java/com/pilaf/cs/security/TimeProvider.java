@@ -1,4 +1,4 @@
-package com.pilaf.cs.util;
+package com.pilaf.cs.security;
 
 import org.springframework.stereotype.Component;
 
