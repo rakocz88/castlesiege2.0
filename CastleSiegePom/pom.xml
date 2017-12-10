@@ -12,5 +12,6 @@
 		<module>CastleSiegeApp</module>
 		<module>CastleSiegeNotification</module>
 		<module>CastleSiegeCommonApi</module>
+		<module>CastleSiegeGameSearch</module>
 	</modules>
 </project>

@@ -91,7 +91,7 @@ public abstract class AbstractWebsocketScenarioTestCase extends SpringIntegratio
 	protected void theUserShouldGetAMessageThatAGameIsFound(String username)
 			throws InterruptedException, ExecutionException, TimeoutException {
 		Object object = GameBasicScenarioTestState.getInstance().getUserMap().get(username).getCompletableFuture()
-				.get(10, TimeUnit.SECONDS);
+				.get(100, TimeUnit.SECONDS);
 		Long userId = userRepository.findByUsername(username).getId();
 		LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) object;
 		GameBasicScenarioTestState.getInstance().setGameId((String) map.get("gameUUID"));

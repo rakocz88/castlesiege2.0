@@ -35,6 +35,4 @@ public class EmailBiz {
 	public String findEmailByToken(String token) {
 		return sendEmailRepository.findByMessage(token).getEmail();
 	}
-
-
 }

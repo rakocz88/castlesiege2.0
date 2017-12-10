@@ -16,6 +16,7 @@ Scenario: AFa- Two players log in and want to start a game
 	And AFa- The table UserSearchGame should be empty 
 	
 Scenario: AFb- Five users log and and want to find a match for them 
+	Given AFb- Wait 5 seconds
 	Given AFb- There are 2 players that are not logged in
 	When AFb- They try to log with the names "filip" , "filip" , "filip2" , "filip2" , "filip3" , "filip3"  , "filip4" , "filip4"  , "filip5" , "filip5" 
 	Then AFb- All the users should have valid tokens 

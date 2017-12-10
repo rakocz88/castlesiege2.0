@@ -172,7 +172,5 @@ public class JwtTokenUtil implements Serializable {
           String username = getUsernameFromToken(token);
           UserAuth user = (UserAuth) userDetailsService.loadUserByUsername(username);
           return user;
-    	
-    	
     }
 }

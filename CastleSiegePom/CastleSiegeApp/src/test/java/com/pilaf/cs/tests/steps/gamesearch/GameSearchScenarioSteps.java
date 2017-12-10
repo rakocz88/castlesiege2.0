@@ -166,4 +166,9 @@ public class GameSearchScenarioSteps extends AbstractWebsocketScenarioTestCase {
 	public void ag_restert_the_amount_of_max_games_to_default_value() throws Throwable {
 		maxHameHolder.resetToDefault();
 	}
+
+	@Given("^AFb- Wait (\\d+) seconds$")
+	public void afb_Wait_seconds(int seconds) throws Throwable {
+		Thread.sleep(seconds*1000);
+	}
 }
