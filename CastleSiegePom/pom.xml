@@ -5,13 +5,19 @@
 	<artifactId>CastleSiegePom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.4.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
 
 
 	<modules>
 		<module>CastleSiegeUsers</module>
-		<module>CastleSiegeApp</module>
 		<module>CastleSiegeNotification</module>
-		<module>CastleSiegeCommonApi</module>
 		<module>CastleSiegeGameSearch</module>
+		<module>CastleSiegeSecurity</module>
+		<module>CastleSiegeApp</module>
 	</modules>
 </project>
