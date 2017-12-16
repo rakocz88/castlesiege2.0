@@ -43,6 +43,14 @@
 		</dependency>
 		<dependency>
 			<groupId>com.pilaf.cs</groupId>
+			<artifactId>CastleSiegeGameCache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.pilaf.cs</groupId>
+			<artifactId>CastleSiegeCommonApi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.pilaf.cs</groupId>
 			<artifactId>CastleSiegeGameSearch</artifactId>
 		</dependency>
 		<dependency>
@@ -71,6 +79,10 @@
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-spring</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.pilaf.cs</groupId>
+			<artifactId>CastleSiegeCommonApi</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
