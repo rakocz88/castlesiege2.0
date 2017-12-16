@@ -3,7 +3,7 @@ package com.pilaf.cs.tests.steps.game.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.pilaf.cs.common.api.models.GameState;
+import com.pilaf.cs.common.api.GameState;
 
 public class GameStateCacheTestState {
 

@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.pilaf.cs.common.api.models.GameState;
+import com.pilaf.cs.common.api.GameState;
 
 @Configuration
 @EnableCaching

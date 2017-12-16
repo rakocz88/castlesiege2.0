@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.pilaf.cs.game.seach.message.GameFoundMessage;
-import com.pilaf.cs.game.search.model.GameState;
+import com.pilaf.cs.game.search.model.GameStateOld;
 
 @Component
 public class GameSearchMessageSender {
@@ -16,7 +16,7 @@ public class GameSearchMessageSender {
 
 	@Async
 	public synchronized void sendMessageToFoundGameChannelChannel(String topic, GameFoundMessage message) {
-		GameState gameState = new GameState();
+		GameStateOld gameState = new GameStateOld();
 		gameState.setWhosTurn(4);
 		websocket.convertAndSend(topic, message);
 	}

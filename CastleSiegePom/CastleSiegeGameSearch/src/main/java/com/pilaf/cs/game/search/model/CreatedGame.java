@@ -5,8 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class CreatedGame {
+
+
 
 	@Id
 	@GeneratedValue
@@ -17,59 +31,15 @@ public class CreatedGame {
 	private long player2Id;
 
 	@NotNull
+	@NonNull
 	private String gameId;
 
 	private boolean gameFinnished;
-
-	public CreatedGame() {
-		super();
-	}
-
-	public CreatedGame(long player1Id, long player2Id, String gameId) {
-		super();
-		this.player1Id = player1Id;
-		this.player2Id = player2Id;
-		this.gameId = gameId;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getPlayer1Id() {
-		return player1Id;
-	}
-
-	public void setPlayer1Id(long player1Id) {
-		this.player1Id = player1Id;
-	}
-
-	public long getPlayer2Id() {
-		return player2Id;
-	}
-
-	public void setPlayer2Id(long player2Id) {
-		this.player2Id = player2Id;
-	}
-
-	public String getGameId() {
-		return gameId;
-	}
-
-	public void setGameId(String gameId) {
-		this.gameId = gameId;
-	}
-
-	public boolean isGameFinnished() {
-		return gameFinnished;
-	}
-
-	public void setGameFinnished(boolean gameFinnished) {
-		this.gameFinnished = gameFinnished;
+	
+	public CreatedGame(long player1, long player2, String gameId) {
+		this.player1Id=player1;
+		this.player2Id=player2;
+		this.gameId=gameId;
 	}
 
 }

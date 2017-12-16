@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.pilaf.cs.common.api.models.GameState;
+import com.pilaf.cs.common.api.GameState;
 import com.pilaf.cs.game.cache.api.GameCache;
 import com.pilaf.cs.tests.steps.websocket.AbstractWebsocketScenarioTestCase;
 

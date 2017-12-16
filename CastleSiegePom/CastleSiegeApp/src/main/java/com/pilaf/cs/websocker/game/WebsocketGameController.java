@@ -9,7 +9,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import com.pilaf.cs.game.search.model.GameState;
+import com.pilaf.cs.game.search.model.GameStateOld;
 import com.pilaf.cs.game.service.GameService;
 
 @Controller
@@ -23,9 +23,9 @@ public class WebsocketGameController {
 
     @MessageMapping("/create/{uuid}")
     @SendTo("/topic/board/{uuid}")
-    public GameState createGame(@DestinationVariable String uuid) {
+    public GameStateOld createGame(@DestinationVariable String uuid) {
     	
-        GameState gameState = gameService.createGame(UUID.fromString(uuid));
+        GameStateOld gameState = gameService.createGame(UUID.fromString(uuid));
 
         return gameState;
     }

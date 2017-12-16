@@ -1,6 +1,7 @@
 package com.pilaf.cs.game.search.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Move implements Serializable {
+public class GameStateOld implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 9141850868820637079L;
-	private int player;
-	private int position;
+	private static final long serialVersionUID = 7342250257652646594L;
+	private UUID gameUUID;
+	private int[][] board = new int[2][2];
+	private int whosTurn;
+	private boolean gameOver;
 
 }
