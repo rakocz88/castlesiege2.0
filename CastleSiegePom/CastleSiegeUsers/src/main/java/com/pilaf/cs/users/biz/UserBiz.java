@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.pilaf.cs.notification.biz.EmailBiz;
 import com.pilaf.cs.users.activator.UserActivator;
+import com.pilaf.cs.users.model.ESUser;
 import com.pilaf.cs.users.model.User;
 import com.pilaf.cs.users.processor.RegistrationUserProccessor;
+import com.pilaf.cs.users.repository.ESUserRepository;
 import com.pilaf.cs.users.repository.UserRepository;
 import com.pilaf.cs.users.utils.UserUtil;
 import com.pilaf.cs.users.validator.UserValidator;
@@ -18,6 +20,9 @@ public class UserBiz {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ESUserRepository esUserRepository;
 
 	@Autowired
 	private EmailBiz emailBiz;
@@ -30,6 +35,9 @@ public class UserBiz {
 
 	@Autowired
 	private UserUtil userUtil;
+	
+	@Autowired
+	private ESUserUpdater esUserUpdater;
 
 	@Autowired
 	private UserActivator userActivator;
@@ -49,14 +57,19 @@ public class UserBiz {
 	public User registerUser(User user) {
 		userValidator.validateRegisteredUser(user);
 		User proccessedUser = userProccessor.proccessNewRegisteredUser(user);
+		esUserRepository.findAll();
 		userRepository.save(proccessedUser);
+		esUserRepository.save(new ESUser(proccessedUser));
 		emailBiz.sendMessage(proccessedUser.getEmail(), "Register User", userUtil.generateActivationCodeLink());
+		esUserRepository.findAll();
 		return proccessedUser;
 	}
 
 	public String activateUser(String token) {
 		String userEmail = emailBiz.findEmailByToken(token);
-		userActivator.activateUser(userEmail);
+		User user = userRepository.findByEmail(userEmail);
+		userActivator.activateUser(user);
+		esUserUpdater.updateUser(user);
 		return "User Active";
 	}
 

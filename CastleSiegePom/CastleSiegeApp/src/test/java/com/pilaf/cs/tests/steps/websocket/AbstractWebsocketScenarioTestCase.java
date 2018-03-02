@@ -20,12 +20,12 @@ import com.pilaf.cs.game.search.repository.CreatedGameRepository;
 import com.pilaf.cs.game.search.repository.UserSearchGameRepository;
 import com.pilaf.cs.game.service.MaximumGamesHolder;
 import com.pilaf.cs.tests.SpringIntegrationTest;
-import com.pilaf.cs.tests.builder.GameBasicScenarioSingleUser;
-import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
 import com.pilaf.cs.tests.helper.LoginTestHelper;
 import com.pilaf.cs.tests.helper.RestEndpoints;
 import com.pilaf.cs.tests.helper.UserPasswordHolder;
 import com.pilaf.cs.tests.helper.WebSocketTestHelper;
+import com.pilaf.cs.tests.state.GameBasicScenarioSingleUser;
+import com.pilaf.cs.tests.state.GameBasicScenarioTestState;
 import com.pilaf.cs.users.repository.UserRepository;
 
 public abstract class AbstractWebsocketScenarioTestCase extends SpringIntegrationTest implements RestEndpoints {

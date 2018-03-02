@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-import com.pilaf.cs.tests.builder.UserRegistrationTestState;
+import com.pilaf.cs.tests.state.UserRegistrationTestState;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -79,11 +79,11 @@ public class UserRegistrationSteps extends AbstractUserRegistrationTestCase {
 	@When("^AB- I register a user with login  \"([^\"]*)\" and password \"([^\"]*)\" and firstname  \"([^\"]*)\" and surname \"([^\"]*)\" and email \"([^\"]*)\"$")
 	public void ab_I_register_a_user_with_login_and_password_and_firstname_and_surname_and_email(String login,
 			String password, String firstname, String surname, String email) throws Throwable {
-		registerUser(login, password, firstname, surname, email);
+		registerUser(login, password, firstname, surname, email, UserRegistrationTestState.getInstance());
 	}
 
 	@When("^AB- I click the link then was send to \"([^\"]*)\"$")
 	public void ab_I_click_the_link_then_was_send_to(String email) throws Throwable {
-		clickTheLinkThatWasSendOnEmail(email);
+		clickTheLinkThatWasSendOnEmail(email, UserRegistrationTestState.getInstance());
 	}
 }

@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
 import com.pilaf.cs.tests.SpringIntegrationTest;
-import com.pilaf.cs.tests.builder.UserTestState;
 import com.pilaf.cs.tests.helper.LoginTestHelper;
 import com.pilaf.cs.tests.helper.RestEndpoints;
+import com.pilaf.cs.tests.state.UserTestState;
 import com.pilaf.cs.users.model.User;
 
 public class AbstractUserModuleTestCase extends SpringIntegrationTest implements RestEndpoints {

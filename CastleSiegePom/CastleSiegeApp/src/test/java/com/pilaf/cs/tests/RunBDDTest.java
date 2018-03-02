@@ -9,6 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(plugin = { "pretty", "html:target/results" }, strict = false, glue = {
 		"com.pilaf.cs.tests.steps" }, features = { "classpath:scenario/userModuleScenarios.feature",
 				"classpath:scenario/websocketSecurityScenarios.feature",
-				"classpath:scenario/gameSearchScenarios.feature", "classpath:scenario/gameStateCache.feature" })
+				"classpath:scenario/gameSearchScenarios.feature", "classpath:scenario/gameStateCache.feature",
+				"classpath:scenario/gameResources.feature" })
 public class RunBDDTest {
 }

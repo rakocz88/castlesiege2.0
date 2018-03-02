@@ -1,4 +1,4 @@
-package com.pilaf.cs.tests.builder;
+package com.pilaf.cs.tests.state;
 
 import com.pilaf.cs.users.model.User;
 

@@ -1,4 +1,4 @@
-package com.pilaf.cs.tests.builder;
+package com.pilaf.cs.tests.state;
 
 public class WebSocketSecurityTestState extends AbstractWebSocketSecurityTestState {
 	private static WebSocketSecurityTestState instance = null;

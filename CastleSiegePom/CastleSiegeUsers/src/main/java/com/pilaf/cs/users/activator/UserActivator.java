@@ -14,6 +14,10 @@ public class UserActivator {
 
 	public void activateUser(String userMail) {
 		User user = userRepository.findByEmail(userMail);
+		activateUser(user);
+	}
+	
+	public void activateUser(User user) {
 		user.setEnabled(true);
 		userRepository.save(user);
 

@@ -22,6 +22,7 @@
 
 	<modules>
 		<module>CastleSiegeCommonApi</module>
+		<module>CastleSiegeElasticSearch</module>
 		<module>CastleSiegeSecurity</module>
 		<module>CastleSiegeGameCache</module>
 		<module>CastleSiegeNotification</module>

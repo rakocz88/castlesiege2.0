@@ -20,7 +20,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import com.pilaf.cs.tests.builder.AbstractWebSocketSecurityTestState;
+import com.pilaf.cs.tests.state.AbstractWebSocketSecurityTestState;
 
 @Component
 public class WebSocketTestHelper {

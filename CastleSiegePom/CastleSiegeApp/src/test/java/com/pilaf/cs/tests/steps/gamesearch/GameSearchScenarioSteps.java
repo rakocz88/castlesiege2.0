@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.pilaf.cs.game.search.model.CreatedGame;
-import com.pilaf.cs.tests.builder.GameBasicScenarioSingleUser;
-import com.pilaf.cs.tests.builder.GameBasicScenarioTestState;
 import com.pilaf.cs.tests.helper.UserPasswordHolder;
+import com.pilaf.cs.tests.state.GameBasicScenarioSingleUser;
+import com.pilaf.cs.tests.state.GameBasicScenarioTestState;
 import com.pilaf.cs.tests.steps.websocket.AbstractWebsocketScenarioTestCase;
 
 import cucumber.api.java.en.Given;

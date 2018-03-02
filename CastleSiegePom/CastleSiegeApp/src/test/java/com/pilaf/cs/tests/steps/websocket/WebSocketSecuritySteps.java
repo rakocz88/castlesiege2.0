@@ -10,9 +10,9 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.pilaf.cs.tests.builder.WebSocketSecurityTestState;
 import com.pilaf.cs.tests.helper.LoginTestHelper;
 import com.pilaf.cs.tests.helper.WebSocketTestHelper;
+import com.pilaf.cs.tests.state.WebSocketSecurityTestState;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

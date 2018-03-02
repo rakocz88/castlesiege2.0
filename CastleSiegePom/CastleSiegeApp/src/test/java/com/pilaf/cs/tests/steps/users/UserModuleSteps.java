@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Arrays;
 
-import com.pilaf.cs.tests.builder.UserTestState;
+import com.pilaf.cs.tests.state.UserTestState;
 import com.pilaf.cs.users.model.User;
 
 import cucumber.api.java.en.Given;

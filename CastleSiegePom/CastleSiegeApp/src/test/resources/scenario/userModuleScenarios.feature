@@ -45,3 +45,15 @@ Scenario: AB- I want to register a new user
 	Then AB- I should get the response 200
 	And AB- the response should contain a not empty token
 	
+Scenario: AC- I want to register a new user and see him in Elastic Search
+	Given AC- User "estest" does not exist in the database
+	When AC- I register a user with login  "estest" and password "estest" and firstname  "name1" and surname "surname1" and email "gangan921312314@gmail.com"
+	Then AC- I should get the response status 200
+	When AC- I try to find a user in Elastic Search with the login "estest"
+	Then AC- I should get a user with the login "estest" and firstname "name1" and surname "surname1" and email "gangan921312314@gmail.com" and the enabled flag should be set to "false"
+	When B- I click the link then was send to "gangan921312314@gmail.com"
+	And AC- I try to find a user in Elastic Search with the login "estest"
+	Then AC- I should get a user with the login "estest" and firstname "name1" and surname "surname1" and email "gangan921312314@gmail.com" and the enabled flag should be set to "true" 
+	
+	 
+	
